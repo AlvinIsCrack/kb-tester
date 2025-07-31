@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import "tailwindcss";
+
+:root {
+    --background: oklch(0.141 0.005 285.823);
+    --foreground: oklch(0.985 0 0);
+    --muted: oklch(0.274 0.006 286.033);
+    --muted-foreground: oklch(0.705 0.015 286.067);
+    --tooltip: oklch(18.264% 0.00204 286.052);
+    --tooltip-foreground: oklch(0.985 0 0);
+
+    --primary: oklch(0.985 0 0);
+    --primary-foreground: oklch(0.141 0.005 285.823);
+    --secondary: oklch(0.274 0.006 286.033);
+    --secondary-foreground: oklch(0.985 0 0);
+
+    --keyused: oklch(24.899% 0.00564 285.917);
+    --keyused-foreground: oklch(0.985 0 0);
+    --keyactive: oklch(71.023% 0.00582 286.051);
+    --keyactive-foreground: oklch(27.353% 0.00368 286.036);
+    --keyalert: oklch(79.202% 0.15974 94.011);
+    --keyalert-foreground: oklch(32.355% 0.05376 88.452);
+    --keywarning: oklch(66.709% 0.15205 60.282);
+    --keywarning-foreground: oklch(26.666% 0.04019 44.086);
+    --keycritical: oklch(44.244% 0.17095 25.062);
+    --keycritical-foreground: oklch(93.65% 0.03199 17.556);
+
+    --border: oklch(100% 0.00011 271.152 / 0.199);
+    --input: oklch(100% 0.00011 271.152 / 0.342);
+    --ring: oklch(0.552 0.016 285.938);
+}
+
+@theme inline {
+    --default-font-family: "Roboto Condensed", sans-serif;
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-tooltip: var(--tooltip);
+    --color-tooltip-foreground: var(--tooltip-foreground);
+
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+
+    --color-keyused: var(--keyused);
+    --color-keyused-foreground: var(--keyused-foreground);
+    --color-keyactive: var(--keyactive);
+    --color-keyactive-foreground: var(--keyactive-foreground);
+    --color-keyalert: var(--keyalert);
+    --color-keyalert-foreground: var(--keyalert-foreground);
+    --color-keywarning: var(--keywarning);
+    --color-keywarning-foreground: var(--keywarning-foreground);
+    --color-keycritical: var(--keycritical);
+    --color-keycritical-foreground: var(--keycritical-foreground);
+
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    --animate-grow: grow var(--tw-duration) ease-out;
+
+    @keyframes grow {
+        from {
+            width: 0;
+        }
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    html {
+        @apply bg-background text-foreground;
+    }
+
+    html,
+    body {
+        @apply w-full h-full m-0 p-0 overflow-x-hidden;
+    }
+
+    a {
+        @apply font-medium not-hover:underline hover:text-primary/80;
+    }
+
+    shortcut {
+        @apply text-shadow-sm/50 font-mono text-xs first:mr-1 last:ml-1 font-bold bg-muted px-1 py-0.5 rounded-sm text-muted-foreground;
+    }
+
+    fade {
+        @apply opacity-50 italic;
+    }
+
+    .keytype-overlay-alpha {
+        @apply bg-red-500/20;
+    }
+
+    .keytype-overlay-modifier {
+        @apply bg-orange-500/20;
+    }
+
+    .keytype-overlay-system {
+        @apply bg-purple-500/20;
+    }
+
+    .keytype-overlay-enter-editing {
+        @apply bg-yellow-400/20;
+    }
+
+    .keytype-overlay-navigation {
+        @apply bg-green-600/20;
+    }
+
+    .keytype-overlay-function {
+        @apply bg-pink-400/20;
+    }
+
+    .keytype-overlay-numpad {
+        @apply bg-cyan-500/20;
+    }
+
+    .keytype-overlay-lock {
+        @apply bg-lime-400/20;
+    }
+}

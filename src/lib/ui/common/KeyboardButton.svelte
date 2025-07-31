@@ -1,0 +1,159 @@
+<script lang="ts">
+	import Input from '$lib/global/input.svelte';
+	import { DisplayMode, Key, KeyPressSpeed, keyTypeMapping } from '$lib/types/keyboard';
+	import { tv } from 'tailwind-variants';
+	import Page from '$lib/global/page.svelte';
+	import { untrack } from 'svelte';
+	import type { HTMLAttributes } from 'svelte/elements';
+	import { tooltip } from './Tooltip.svelte';
+	import { tr } from '$lib/locale/locale.svelte';
+	import { fade } from 'svelte/transition';
+
+	const keyboardButton = $derived.by(() => {
+		const _ = [Page.showIntlBackslash];
+
+		return tv({
+			base: 'relative text-muted-foreground bg-background select-none flex justify-center items-center text-nowrap h-12 aspect-[.925] rounded-sm gap-1 p-2 px-3 border-1 hover:ring-3 hover:cursor-pointer hover:ring-foreground',
+			variants: {
+				wasPressed: {
+					false: '',
+					true: 'bg-keyused text-keyused-foreground'
+				},
+				active: {
+					false: '',
+					true: 'bg-keyactive inset-shadow-none text-keyactive-foreground ring-inset ring-2 ring-background/50'
+				},
+				key: {
+					// Fila 1
+					[Key.Backspace]: 'aspect-[1.85] w-full', // 2u
+
+					// Fila 2
+					[Key.Tab]: 'aspect-[1.3875] justify-center', // 1.5u
+					[Key.Backslash]: 'aspect-[1.3875] justify-end', // 1.5u
+
+					// Fila 3
+					[Key.CapsLock]: 'aspect-[1.61875] justify-start', // 1.75u
+					[Key.Enter]: 'aspect-[2.08125] w-full justify-center', // 2.25u
+
+					// Fila 4
+					[Key.ShiftLeft]: `${
+						Page.showIntlBackslash ? 'w-full' : 'aspect-[2.08125]'
+					} justify-start`, // 2.25u
+					[Key.ShiftRight]: 'aspect-[2.54375] w-full justify-end', // 2.75u
+
+					// Fila 5 (Bottom Row)
+					[Key.ControlLeft]: 'aspect-[1.15625] justify-start', // 1.25u
+					[Key.MetaLeft]: 'aspect-[1.15625]', // 1.25u
+					[Key.AltLeft]: 'aspect-[1.15625] justify-start', // 1.25u
+					[Key.Space]: 'w-full', // El espacio es un caso especial
+
+					[Key.AltRight]: 'aspect-[1.15625] justify-end', // 1.25u
+					[Key.ContextMenu]: 'aspect-[1.15625]', // 1.25u
+					[Key.ControlRight]: 'aspect-[1.15625] justify-end', // 1.25u
+
+					// Teclas especiales sin ancho modificado
+					[Key.Escape]: 'justify-start',
+
+					// Numpad (estos ya tenían un manejo especial)
+					[Key.NumpadAdd]: 'h-full aspect-auto',
+					[Key.NumpadEnter]: 'h-full aspect-auto',
+					[Key.Numpad0]: 'w-full aspect-auto'
+				},
+				display: {
+					false: '',
+					true: 'cursor-default! w-6 h-6 border-1 text-sm rounded-sm scale-90 shadow-md/50 p-4 justify-center bg-keyused text-keyused-foreground'
+				},
+				speed: {
+					[KeyPressSpeed.Normal]: '',
+					[KeyPressSpeed.Fast]: 'ring-foreground/50 bg-keyalert text-keyalert-foreground',
+					[KeyPressSpeed.VeryFast]: 'ring-foreground/50 bg-keywarning text-keywarning-foreground',
+					[KeyPressSpeed.DangeourslyFast]:
+						'ring-foreground/50 bg-keycritical  text-keycritical-foreground'
+				}
+			}
+		});
+	});
+
+	const {
+		key,
+		display = false,
+		class: _class,
+		...props
+	}: { key: Key; display?: boolean } & HTMLAttributes<HTMLDivElement> = $props();
+
+	const active = $derived(!display && Input.keyboard.keys[key]);
+	const wasRecentlyFast = $derived(Input.wasRecentlyFast(key));
+
+	const speed = $derived.by(() => {
+		const _ = display || active;
+		return Input.getSpeedOfKey(key);
+	});
+	const timesPressed = $derived.by(() => {
+		const _ = active;
+		return untrack(() => Input.timesPressed(key));
+	});
+
+	const layoutDisplays = $derived(
+		Page.layout.displays[key] ?? { text: key.replace(/digit|numpad|key/i, '') }
+	);
+
+	let ready = $state(false);
+
+	$effect(() => {
+		setTimeout(() => {
+			ready = true;
+		}, 200);
+	});
+</script>
+
+{#if key !== Key.IntlBackslash || Page.showIntlBackslash}
+	<div
+		use:tooltip={{ content: tr(`key.${key}.tooltip`) }}
+		onclick={() => {
+			if (display) return;
+		}}
+		class="{keyboardButton({
+			active,
+			speed: active || display || wasRecentlyFast ? speed : KeyPressSpeed.Normal,
+			key: key as any,
+			wasPressed: Input.wasPressed(key),
+			display
+		})} {_class}"
+		{...props}
+	>
+		{#if timesPressed > 0}
+			<div
+				class="absolute top-0 right-0 px-1 text-xs opacity-50 {display
+					? 'flex aspect-square translate-x-1/3 -translate-y-1/3 items-center justify-center text-foreground opacity-100 text-shadow-sm/100'
+					: ''}"
+			>
+				{timesPressed}
+			</div>
+		{/if}
+
+		{#if layoutDisplays.icon}
+			{@const Icon = layoutDisplays.icon}
+			<div class="absolute flex h-full w-full items-center justify-center">
+				<Icon class="inline scale-150" />
+			</div>
+		{/if}
+
+		{#if !Page.hideKeyLabels && layoutDisplays.text}
+			<div
+				transition:fade={{ duration: 100 }}
+				class="absolute {layoutDisplays.text.replace(/\s+/g, '').length >= 3 ? 'text-sm' : ''}"
+			>
+				{layoutDisplays.text}
+			</div>
+		{/if}
+
+		{#if !display && Page.displayMode === DisplayMode.KeyType}
+			<div
+				transition:fade={{ duration: 200 }}
+				class="pointer-events-none absolute top-0 left-0 h-full w-full overflow-hidden rounded-sm mix-blend-plus-lighter keytype-overlay-{keyTypeMapping[
+					key
+				]}"
+			></div>
+		{/if}
+	</div>
+{/if}
