@@ -2,33 +2,180 @@
 
 @import "tailwindcss";
 
-:root {
-    --background: oklch(0.141 0.005 285.823);
-    --foreground: oklch(0.985 0 0);
-    --muted: oklch(0.274 0.006 286.033);
-    --muted-foreground: oklch(0.705 0.015 286.067);
-    --tooltip: oklch(18.264% 0.00204 286.052);
-    --tooltip-foreground: oklch(0.985 0 0);
+@layer base {
+    html {
+        --background: oklch(0.141 0.005 285.823);
+        --foreground: oklch(0.985 0 0);
+        --muted: oklch(0.274 0.006 286.033);
+        --muted-foreground: oklch(0.705 0.015 286.067);
+        --tooltip: oklch(18.264% 0.00204 286.052);
+        --tooltip-foreground: oklch(0.985 0 0);
 
-    --primary: oklch(0.985 0 0);
-    --primary-foreground: oklch(0.141 0.005 285.823);
-    --secondary: oklch(0.274 0.006 286.033);
-    --secondary-foreground: oklch(0.985 0 0);
+        --primary: oklch(0.985 0 0);
+        --primary-foreground: oklch(0.141 0.005 285.823);
+        --secondary: oklch(0.274 0.006 286.033);
+        --secondary-foreground: oklch(0.985 0 0);
 
-    --keyused: oklch(24.899% 0.00564 285.917);
-    --keyused-foreground: oklch(0.985 0 0);
-    --keyactive: oklch(71.023% 0.00582 286.051);
-    --keyactive-foreground: oklch(27.353% 0.00368 286.036);
-    --keyalert: oklch(79.202% 0.15974 94.011);
-    --keyalert-foreground: oklch(32.355% 0.05376 88.452);
-    --keywarning: oklch(66.709% 0.15205 60.282);
-    --keywarning-foreground: oklch(26.666% 0.04019 44.086);
-    --keycritical: oklch(44.244% 0.17095 25.062);
-    --keycritical-foreground: oklch(93.65% 0.03199 17.556);
+        --keyused: oklch(24.899% 0.00564 285.917);
+        --keyused-foreground: oklch(0.985 0 0);
+        --keyactive: oklch(71.023% 0.00582 286.051);
+        --keyactive-foreground: oklch(27.353% 0.00368 286.036);
+        --keyalert: oklch(79.202% 0.15974 94.011);
+        --keyalert-foreground: oklch(32.355% 0.05376 88.452);
+        --keywarning: oklch(66.709% 0.15205 60.282);
+        --keywarning-foreground: oklch(26.666% 0.04019 44.086);
+        --keycritical: oklch(44.244% 0.17095 25.062);
+        --keycritical-foreground: oklch(93.65% 0.03199 17.556);
 
-    --border: oklch(100% 0.00011 271.152 / 0.199);
-    --input: oklch(100% 0.00011 271.152 / 0.342);
-    --ring: oklch(0.552 0.016 285.938);
+        --border: oklch(100% 0.00011 271.152 / 0.199);
+        --input: oklch(100% 0.00011 271.152 / 0.342);
+        --ring: oklch(0.552 0.016 285.938);
+    }
+
+    html[data-theme='Matrix'] {
+        --background: oklch(0.12 0.02 150);
+        --foreground: oklch(0.8 0.18 150);
+        --muted: oklch(0.2 0.04 150);
+        --muted-foreground: oklch(0.6 0.15 150);
+        --tooltip: oklch(0.12 0.02 150);
+        --tooltip-foreground: oklch(0.8 0.18 150);
+
+        --primary: oklch(0.8 0.18 150);
+        --primary-foreground: oklch(0.12 0.02 150);
+        --secondary: oklch(0.2 0.04 150);
+        --secondary-foreground: oklch(0.8 0.18 150);
+
+        --keyused: oklch(0.25 0.06 150);
+        --keyused-foreground: oklch(0.8 0.18 150);
+        --keyactive: oklch(0.9 0.2 150);
+        --keyactive-foreground: oklch(0.12 0.02 150);
+        --keyalert: oklch(0.95 0.15 140);
+        --keyalert-foreground: oklch(0.12 0.02 150);
+        --keywarning: oklch(0.85 0.18 145);
+        --keywarning-foreground: oklch(0.12 0.02 150);
+        --keycritical: oklch(0.8 0.2 130);
+        --keycritical-foreground: oklch(0.12 0.02 150);
+
+        --border: oklch(0.8 0.18 150 / 0.2);
+        --input: oklch(0.8 0.18 150 / 0.3);
+        --ring: oklch(0.8 0.18 150);
+    }
+
+    html[data-theme='Light'] {
+        --background: oklch(0.98 0.01 240);
+        --foreground: oklch(0.2 0.01 240);
+        --muted: oklch(0.9 0.01 240);
+        --muted-foreground: oklch(0.4 0.01 240);
+        --tooltip: oklch(0.2 0.01 240);
+        --tooltip-foreground: oklch(0.98 0.01 240);
+
+        --primary: oklch(0.5 0.15 250);
+        --primary-foreground: oklch(0.98 0.01 240);
+        --secondary: oklch(0.9 0.01 240);
+        --secondary-foreground: oklch(0.2 0.01 240);
+
+        --keyused: oklch(0.85 0.02 240);
+        --keyused-foreground: oklch(0.2 0.01 240);
+        --keyactive: oklch(0.5 0.15 250);
+        --keyactive-foreground: oklch(0.98 0.01 240);
+        --keyalert: oklch(0.8 0.2 90);
+        --keyalert-foreground: oklch(0.3 0.1 90);
+        --keywarning: oklch(0.7 0.25 60);
+        --keywarning-foreground: oklch(0.3 0.1 60);
+        --keycritical: oklch(0.6 0.25 30);
+        --keycritical-foreground: oklch(0.98 0.01 30);
+
+        --border: oklch(0.2 0.01 240 / 0.2);
+        --input: oklch(0.2 0.01 240 / 0.1);
+        --ring: oklch(0.5 0.15 250);
+    }
+
+    html[data-theme='Sakura'] {
+        --background: oklch(0.98 0.01 20);
+        --foreground: oklch(0.3 0.05 340);
+        --muted: oklch(0.95 0.02 10);
+        --muted-foreground: oklch(0.5 0.04 350);
+        --tooltip: oklch(0.3 0.05 340);
+        --tooltip-foreground: oklch(0.98 0.01 20);
+
+        --primary: oklch(0.8 0.1 5);
+        --primary-foreground: oklch(0.2 0.04 340);
+        --secondary: oklch(0.9 0.05 140);
+        --secondary-foreground: oklch(0.3 0.05 340);
+
+        --keyused: oklch(0.96 0.02 15);
+        --keyused-foreground: oklch(0.3 0.05 340);
+        --keyactive: oklch(0.8 0.1 5);
+        --keyactive-foreground: oklch(0.98 0.01 20);
+        --keyalert: oklch(0.85 0.12 50);
+        --keyalert-foreground: oklch(0.3 0.05 340);
+        --keywarning: oklch(0.75 0.15 30);
+        --keywarning-foreground: oklch(0.98 0.01 20);
+        --keycritical: oklch(0.65 0.2 15);
+        --keycritical-foreground: oklch(0.98 0.01 20);
+
+        --border: oklch(0.8 0.1 5 / 0.3);
+        --input: oklch(0.8 0.1 5 / 0.2);
+        --ring: oklch(0.8 0.1 5);
+    }
+
+    html[data-theme='Hazard'] {
+        --background: oklch(0.15 0.01 240);
+        --foreground: oklch(0.9 0.2 90);
+        --muted: oklch(0.2 0.01 240);
+        --muted-foreground: oklch(0.7 0.15 90);
+        --tooltip: oklch(0.15 0.01 240);
+        --tooltip-foreground: oklch(0.9 0.2 90);
+
+        --primary: oklch(0.9 0.2 90);
+        --primary-foreground: oklch(0.15 0.01 240);
+        --secondary: oklch(0.2 0.01 240);
+        --secondary-foreground: oklch(0.9 0.2 90);
+
+        --keyused: oklch(0.25 0.02 240);
+        --keyused-foreground: oklch(0.9 0.2 90);
+        --keyactive: oklch(77.331% 0.0256 226.727);
+        --keyactive-foreground: oklch(0.15 0.01 240);
+        --keyalert: oklch(0.85 0.18 85);
+        --keyalert-foreground: oklch(0.15 0.01 240);
+        --keywarning: oklch(0.8 0.2 60);
+        --keywarning-foreground: oklch(0.15 0.01 240);
+        --keycritical: oklch(0.7 0.25 40);
+        --keycritical-foreground: oklch(0.98 0.01 40);
+
+        --border: oklch(0.9 0.2 90 / 0.2);
+        --input: oklch(0.9 0.2 90 / 0.1);
+        --ring: oklch(0.9 0.2 90);
+    }
+
+    html[data-theme='Toxic'] {
+        --background: oklch(0.95 0.05 190);
+        --foreground: oklch(0.6 0.25 140);
+        --muted: oklch(0.9 0.04 190);
+        --muted-foreground: oklch(0.5 0.2 140);
+        --tooltip: oklch(0.6 0.25 140);
+        --tooltip-foreground: oklch(0.95 0.05 190);
+
+        --primary: oklch(0.7 0.28 140);
+        --primary-foreground: oklch(0.1 0.02 140);
+        --secondary: oklch(0.85 0.08 195);
+        --secondary-foreground: oklch(0.6 0.25 140);
+
+        --keyused: oklch(0.92 0.06 185);
+        --keyused-foreground: oklch(0.6 0.25 140);
+        --keyactive: oklch(0.75 0.3 140);
+        --keyactive-foreground: oklch(0.98 0.02 140);
+        --keyalert: oklch(0.8 0.2 130);
+        --keyalert-foreground: oklch(0.2 0.05 130);
+        --keywarning: oklch(0.7 0.25 110);
+        --keywarning-foreground: oklch(0.2 0.05 110);
+        --keycritical: oklch(0.6 0.28 90);
+        --keycritical-foreground: oklch(0.98 0.02 90);
+
+        --border: oklch(0.7 0.28 140 / 0.3);
+        --input: oklch(0.7 0.28 140 / 0.2);
+        --ring: oklch(0.7 0.28 140);
+    }
 }
 
 @theme inline {
@@ -76,7 +223,7 @@
     }
 
     html {
-        @apply bg-background text-foreground;
+        @apply bg-background text-foreground select-none;
     }
 
     html,

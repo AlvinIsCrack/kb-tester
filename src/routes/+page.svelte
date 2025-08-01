@@ -7,15 +7,15 @@
 	import KeyResume from '$lib/ui/components/KeyResume.svelte';
 	import DialogOptions from '$lib/ui/dialogs/DialogOptions.svelte';
 	import { fade, fly } from 'svelte/transition';
-	import Edit from '$lib/icons/edit.svelte';
 	import Button from '$lib/ui/common/Button.svelte';
 	import DrawerEdit from '$lib/ui/drawers/DrawerEdit.svelte';
 	import { tr } from '$lib/locale/locale.svelte';
 	import Reset from '$lib/icons/reset-.svelte';
 	import ClearKeylog from '$lib/icons/clear-keylog.svelte';
 	import Show from '$lib/icons/show.svelte';
-	import { DisplayMode, KeyType } from '$lib/types/keyboard';
+	import { DisplayMode, KeyType } from '$lib/global/keyboard.svelte';
 	import Footer from '$lib/ui/components/Footer.svelte';
+	import Header from '$lib/ui/components/Header.svelte';
 </script>
 
 <div class="relative flex h-full w-full items-center justify-center overflow-hidden">
@@ -59,7 +59,7 @@
 
 					{#if Page.displayMode === DisplayMode.KeyType}
 						<div
-							transition:fly={{ y: 20, duration: 200, delay: 500 }}
+							transition:fly={{ y: 20, duration: 200 }}
 							class="absolute mt-2 flex w-full flex-row flex-wrap gap-1 text-xs"
 						>
 							{#each Object.values(KeyType) as keytype (keytype)}
@@ -78,10 +78,9 @@
 		<div class="absolute top-0 flex h-min w-full items-center justify-center">
 			<KeyLog />
 		</div>
-		<div class="absolute right-0 bottom-0 m-4">
-			<Footer />
-		</div>
 
+		<Header />
+		<Footer />
 		<DrawerEdit />
 		<Foreground />
 		<DialogOptions />

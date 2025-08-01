@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Input from '$lib/global/input.svelte';
-	import { Key, KeyPressSpeed } from '$lib/types/keyboard';
+	import { Key, KeyPressSpeed } from '$lib/global/keyboard.svelte';
 	import { untrack } from 'svelte';
 	import { fade } from 'svelte/transition';
 
@@ -28,13 +28,16 @@
 </script>
 
 {#if pressed}
-	<div out:fade class="pointer-events-none fixed z-40 h-full w-full ring-8 ring-input ring-inset">
+	<div
+		out:fade
+		class="pointer-events-none fixed z-40 h-full w-full ring-8 ring-foreground ring-inset"
+	>
 		{#key pressed}
 			{@const delay = pressed - lastPressed}
 			<div
 				class="background-ring absolute h-full w-full ring-16
             {delay >= KeyPressSpeed.Normal
-					? 'ring-input/80'
+					? 'ring-foreground/80'
 					: delay >= KeyPressSpeed.Fast
 						? 'alert ring-keyalert/30'
 						: delay >= KeyPressSpeed.VeryFast

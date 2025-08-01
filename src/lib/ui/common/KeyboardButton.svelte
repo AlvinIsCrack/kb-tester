@@ -1,6 +1,12 @@
 <script lang="ts">
 	import Input from '$lib/global/input.svelte';
-	import { DisplayMode, Key, KeyPressSpeed, keyTypeMapping } from '$lib/types/keyboard';
+	import {
+		DisplayMode,
+		Key,
+		keyDisplays,
+		KeyPressSpeed,
+		keyTypeMapping
+	} from '$lib/global/keyboard.svelte';
 	import { tv } from 'tailwind-variants';
 	import Page from '$lib/global/page.svelte';
 	import { untrack } from 'svelte';
@@ -93,8 +99,8 @@
 		return untrack(() => Input.timesPressed(key));
 	});
 
-	const layoutDisplays = $derived(
-		Page.layout.displays[key] ?? { text: key.replace(/digit|numpad|key/i, '') }
+	const layoutKeys = $derived(
+		keyDisplays[key as keyof typeof keyDisplays] ?? { text: key.replace(/digit|numpad|key/i, '') }
 	);
 
 	let ready = $state(false);
@@ -131,26 +137,30 @@
 			</div>
 		{/if}
 
-		{#if layoutDisplays.icon}
-			{@const Icon = layoutDisplays.icon}
+		{#if layoutKeys.icon}
+			{@const Icon = layoutKeys.icon}
 			<div class="absolute flex h-full w-full items-center justify-center">
 				<Icon class="inline scale-150" />
 			</div>
 		{/if}
 
-		{#if !Page.hideKeyLabels && layoutDisplays.text}
+		{#if !Page.hideKeyLabels && layoutKeys.text}
 			<div
 				transition:fade={{ duration: 100 }}
-				class="absolute {layoutDisplays.text.replace(/\s+/g, '').length >= 3 ? 'text-sm' : ''}"
+				class="absolute text-center leading-3.5 {layoutKeys.text.replace(/\s+/g, '').length >= 3
+					? 'text-sm'
+					: ''}"
 			>
-				{layoutDisplays.text}
+				{#each layoutKeys.text.split('\n') as line (line)}
+					<p>{line}</p>
+				{/each}
 			</div>
 		{/if}
 
 		{#if !display && Page.displayMode === DisplayMode.KeyType}
 			<div
 				transition:fade={{ duration: 200 }}
-				class="pointer-events-none absolute top-0 left-0 h-full w-full overflow-hidden rounded-sm mix-blend-plus-lighter keytype-overlay-{keyTypeMapping[
+				class="pointer-events-none absolute top-0 left-0 h-full w-full overflow-hidden rounded-sm keytype-overlay-{keyTypeMapping[
 					key
 				]}"
 			></div>

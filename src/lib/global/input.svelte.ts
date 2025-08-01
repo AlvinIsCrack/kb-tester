@@ -1,5 +1,5 @@
 import { browser } from "$app/environment";
-import { Key, KeyPressSpeed, type KeyboardState, type MouseState } from "$lib/types/keyboard";
+import { Key, KeyPressSpeed, type KeyboardState, type MouseState } from "$lib/global/keyboard.svelte";
 import Sound from "$lib/utils/Sound";
 
 let _initialized = $state(false);

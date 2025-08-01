@@ -3,7 +3,7 @@
 	import { untrack } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
 	import KeyboardButton from '../common/KeyboardButton.svelte';
-	import type { Key } from '$lib/types/keyboard';
+	import type { Key } from '$lib/global/keyboard.svelte';
 	import { flip } from 'svelte/animate';
 	import { circOut } from 'svelte/easing';
 	import Time from '$lib/utils/Time';

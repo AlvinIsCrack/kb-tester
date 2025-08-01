@@ -1,5 +1,6 @@
 // import { browser } from "$app/environment";
-import { DisplayMode, Key, type KeyboardLayout } from "$lib/types/keyboard";
+import { browser } from "$app/environment";
+import { DisplayMode, Key, type KeyboardRows } from "$lib/global/keyboard.svelte";
 import type { KeyboardLayoutsType as KeyboardLayoutsKeys } from "./kb_layouts.svelte";
 import KeyboardLayouts from "./kb_layouts.svelte";
 
@@ -13,18 +14,15 @@ let _selectedKeys: Key[] = $state([]);
 let _numpadEnabled = $state(true);
 
 let _layoutKey: KeyboardLayoutsKeys = $state('QWERTY')
-let _layout: KeyboardLayout = $derived(KeyboardLayouts.getLayout(_layoutKey))
+let _layout: KeyboardRows = $derived(KeyboardLayouts.getLayout(_layoutKey))
 
-// if (browser)
-//     window.addEventListener("keydown", async (event) => {
-//         if (event.repeat) return;
-//         if (event.ctrlKey) {
-//             switch (event.code) {
-//                 default:
-//                     break;
-//             }
-//         }
-//     });
+if (browser) {
+    _showIntlBackslash = (localStorage.getItem('showIntlBackslash') === "true");
+    _numpadEnabled = (localStorage.getItem('numpadEnabled') === "true");
+    _hideKeyLabels = (localStorage.getItem('hideKeyLabels') === "true");
+    _displayMode = localStorage.getItem('displayMode') as any ?? DisplayMode.Default;
+    _layoutKey = localStorage.getItem('layoutKey') as any ?? 'QWERTY';
+}
 
 const Page = {
     get showIntlBackslash() {
@@ -32,6 +30,7 @@ const Page = {
     },
     set showIntlBackslash(value) {
         _showIntlBackslash = value;
+        localStorage.setItem('showIntlBackslash', `${value}`);
     },
 
     get numpadEnabled() {
@@ -39,6 +38,7 @@ const Page = {
     },
     set numpadEnabled(value) {
         _numpadEnabled = value;
+        localStorage.setItem('numpadEnabled', `${value}`);
     },
 
     get hideKeyLabels() {
@@ -46,6 +46,7 @@ const Page = {
     },
     set hideKeyLabels(value) {
         _hideKeyLabels = value;
+        localStorage.setItem('hideKeyLabels', `${value}`);
     },
 
     get displayMode() {
@@ -53,6 +54,7 @@ const Page = {
     },
     set displayMode(value) {
         _displayMode = value;
+        localStorage.setItem('displayMode', value);
     },
 
     get showOptions() {
@@ -71,6 +73,14 @@ const Page = {
 
     get layout() {
         return _layout;
+    },
+
+    get layoutKey() {
+        return _layoutKey;
+    },
+    set layoutKey(value) {
+        _layoutKey = value;
+        localStorage.setItem('layoutKey', value);
     }
 }
 

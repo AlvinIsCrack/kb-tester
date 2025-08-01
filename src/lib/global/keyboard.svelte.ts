@@ -1,3 +1,16 @@
+import ContextMenu from "$lib/icons/context-menu.svelte";
+import Enter from "$lib/icons/enter.svelte";
+import KbDown from "$lib/icons/kb-down.svelte";
+import KbLeft from "$lib/icons/kb-left.svelte";
+import KbRight from "$lib/icons/kb-right.svelte";
+import KbUp from "$lib/icons/kb-up.svelte";
+import LeftArrow from "$lib/icons/left-arrow.svelte";
+import Spacebar from "$lib/icons/spacebar.svelte";
+import Tab from "$lib/icons/tab.svelte";
+import Windows from "$lib/icons/windows.svelte";
+import { tr } from "$lib/locale/locale.svelte";
+import type { Component } from "svelte";
+
 export type KeyboardState = {
     keys: Record<string, boolean>;
 };
@@ -172,16 +185,6 @@ export enum Key {
     Unidentified = "Unidentified" // Cuando el navegador no puede identificar la tecla
 }
 
-export interface KeyboardLayout {
-    rows: KeyboardRows;
-    displays: {
-        [key: string]: {
-            icon?: any;
-            text?: string;
-        }
-    }
-}
-
 export type KeyboardRows = Key[][];
 
 export enum KeyLocation {
@@ -192,6 +195,136 @@ export enum KeyLocation {
     Mobile = 4,
     Joystick = 5
 }
+
+export const keyDisplays: { [key: string]: { icon?: Component; text?: string; } } = {
+    [Key.ContextMenu]: {
+        icon: ContextMenu
+    },
+    [Key.CapsLock]:
+    {
+        text: tr('key.caps')
+    },
+    [Key.Tab]:
+    {
+        icon: Tab
+    },
+    [Key.Backspace]:
+    {
+        icon: LeftArrow
+    },
+    [Key.MetaLeft]:
+    {
+        icon: Windows
+    },
+    [Key.ArrowLeft]:
+    {
+        icon: KbLeft
+    },
+    [Key.ArrowRight]:
+    {
+        icon: KbRight
+    },
+    [Key.ArrowDown]:
+    {
+        icon: KbDown
+    },
+    [Key.ArrowUp]:
+    {
+        icon: KbUp
+    },
+    [Key.Enter]:
+    {
+        icon: Enter
+    },
+    [Key.AltLeft]:
+    {
+        text: tr('key.alt-left')
+    },
+    [Key.AltRight]:
+    {
+        text: tr('key.alt-right')
+    },
+    [Key.ControlRight]:
+    {
+        text: tr('key.control')
+    },
+    [Key.ControlLeft]:
+    {
+        text: tr('key.control')
+    },
+    [Key.Escape]:
+    {
+        text: tr('key.escape')
+    },
+    [Key.Backslash]:
+    {
+        text: tr('key.backslash-display')
+    },
+    [Key.IntlBackslash]:
+    {
+        text: tr('key.backslash-display')
+    },
+    [Key.ShiftLeft]:
+    {
+        text: tr('key.shift-left')
+    },
+    [Key.ShiftRight]:
+    {
+        text: tr('key.shift-right')
+    },
+    [Key.Minus]:
+        { text: tr('key.minus-display') },
+    [Key.Equal]:
+        { text: tr('key.equal-display') },
+    [Key.BracketLeft]:
+        { text: tr('key.bracket-left-display') },
+    [Key.BracketRight]:
+        { text: tr('key.bracket-right-display') },
+    [Key.Semicolon]:
+        { text: tr('key.semicolon-display') },
+    [Key.Quote]:
+        { text: tr('key.quote-display') },
+    [Key.Comma]:
+        { text: tr('key.comma-display') },
+    [Key.Period]:
+        { text: tr('key.period-display') },
+    [Key.Slash]:
+        { text: tr('key.slash-display') },
+    [Key.Backquote]:
+        { text: tr('key.backquote-display') },
+    [Key.Delete]:
+        { text: tr('key.delete-display') },
+    [Key.PageDown]:
+        { text: tr('key.page-down-display') },
+    [Key.PageUp]:
+        { text: tr('key.page-up-display') },
+    [Key.Insert]:
+        { text: tr('key.insert-display') },
+    [Key.PrintScreen]:
+        { text: tr('key.print-screen-display') },
+    [Key.ScrollLock]:
+        { text: tr('key.scroll-lock-display') },
+    [Key.NumLock]:
+        { text: tr('key.num-lock-display') },
+    [Key.NumpadDivide]:
+        { text: tr('key.numpad-divide-display') },
+    [Key.NumpadMultiply]:
+        { text: tr('key.numpad-multiply-display') },
+    [Key.NumpadSubtract]:
+        { text: tr('key.numpad-subtract-display') },
+    [Key.NumpadAdd]:
+        { text: tr('key.numpad-add-display') },
+    [Key.NumpadDecimal]:
+        { text: tr('key.numpad-decimal-display') },
+    [Key.NumpadEnter]:
+        { icon: Enter },
+    [Key.Space]:
+        { icon: Spacebar },
+    [Key.Home]:
+        { text: tr('key.home-display') },
+    [Key.End]:
+        { text: tr('key.end-display') }
+} as const;
 
 export const keyTypeMapping: Record<Key, KeyType> = {
     // --- KeyType.Alpha ---
@@ -331,4 +464,4 @@ export const keyTypeMapping: Record<Key, KeyType> = {
     [Key.Unidentified]: KeyType.System,
     [Key.MetaLeft]: KeyType.System,
     [Key.MetaRight]: KeyType.System,
-};
+} as const;

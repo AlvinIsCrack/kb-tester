@@ -1,4 +1,4 @@
-import type { Key } from "$lib/types/keyboard";
+import type { Key } from "$lib/global/keyboard.svelte";
 
 export default class Sound {
     static playKey(key: Key, voiceIndex = 0, rate = 2.2, pitch = 1, volume = 1) {

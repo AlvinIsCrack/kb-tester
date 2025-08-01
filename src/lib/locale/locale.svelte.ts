@@ -1,10 +1,10 @@
 import { browser } from "$app/environment";
 import en from "./en.json";
-// import es from "./es.json";
+import es from "./es.json";
 
 const languages: { [code: string]: { [key: string]: string } } = {
     en,
-    // es
+    es
 }
 
 let _lang: typeof en | undefined = $state(undefined);
@@ -19,7 +19,7 @@ if (browser) {
 }
 
 
-export function tr(key: keyof typeof en, ...args: string[]): string {
+export function tr(key: keyof typeof en, ...args: string[]): string | undefined {
     let text = _lang?.[key] ?? en[key];
     return text;
 }

@@ -5,7 +5,7 @@
 	import { tooltip } from './Tooltip.svelte';
 
 	const button = tv({
-		base: 'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:text-muted-foreground disabled:pointer-events-none disabled:opacity-60 cursor-pointer active:bg-primary/40 [&>svg]:scale-120',
+		base: 'relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:text-muted-foreground disabled:pointer-events-none disabled:opacity-60 cursor-pointer active:bg-primary/40 [&>svg]:scale-130',
 		variants: {
 			variant: {
 				primary:
@@ -31,11 +31,13 @@
 		variant,
 		startDecorator,
 		children,
+		href,
 		tooltip: _tooltip,
 		size,
 		...props
 	}: Variant &
 		HTMLButtonAttributes & {
+			href?: string;
 			startDecorator?: Component;
 			tooltip?: string | Snippet<[]>;
 		} = $props();
@@ -47,4 +49,7 @@
 		<Decorator class="mr-2 -ml-1 inline" />
 	{/if}
 	{@render children?.()}
+	{#if href}
+		<a class="absolute top-0 left-0 h-full w-full" aria-label="link" {href}></a>
+	{/if}
 </button>
