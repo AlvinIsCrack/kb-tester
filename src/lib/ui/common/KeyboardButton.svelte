@@ -38,7 +38,7 @@
 					[Key.Backslash]: 'aspect-[1.3875] justify-end', // 1.5u
 
 					// Fila 3
-					[Key.CapsLock]: 'aspect-[1.61875] justify-start', // 1.75u
+					[Key.CapsLock]: 'aspect-[1.61875] justify-start text-left', // 1.75u
 					[Key.Enter]: 'aspect-[2.08125] w-full justify-center', // 2.25u
 
 					// Fila 4
