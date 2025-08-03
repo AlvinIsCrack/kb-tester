@@ -145,7 +145,7 @@
 					<div class="flex w-full flex-row">
 						<img
 							class="pointer-events-none h-min rounded-lg border shadow-md"
-							src="/help-{id}.png"
+							src="help-{id}.png"
 							alt=""
 						/>
 						<div class="flex w-full flex-row items-start justify-between gap-2">
