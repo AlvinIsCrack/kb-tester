@@ -3,6 +3,7 @@
 	import type { HTMLInputAttributes } from 'svelte/elements';
 	import { tv } from 'tailwind-variants';
 	import { tooltip, type TooltipContentParameter } from './Tooltip.svelte';
+	import Help from '$lib/icons/help .svelte';
 
 	const checkbox = tv({
 		base: 'peer h-4 w-4 shrink-0 rounded-sm border border-primary shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground'
@@ -34,6 +35,9 @@
 				{@html label}
 			{:else}
 				{@render label()}
+			{/if}
+			{#if _tooltip}
+				<Help class="pointer-events-none inline opacity-50" />
 			{/if}
 		</label>
 	{/if}

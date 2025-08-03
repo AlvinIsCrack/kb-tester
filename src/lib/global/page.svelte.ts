@@ -1,28 +1,21 @@
-// import { browser } from "$app/environment";
-import { browser } from "$app/environment";
-import { DisplayMode, Key, type KeyboardRows } from "$lib/global/keyboard.svelte";
+import { DisplayMode, Key, KeyboardType, type KeyboardRows } from "$lib/global/keyboard.svelte";
+import LocalStorage from "$lib/utils/LocalStorage.svelte";
 import type { KeyboardLayoutsType as KeyboardLayoutsKeys } from "./kb_layouts.svelte";
 import KeyboardLayouts from "./kb_layouts.svelte";
 
+let _showHelp = $state(LocalStorage.getItem('visitedBefore') === undefined);
 let _showOptions = $state(false);
-let _showEdit = $state(false);
-let _hideKeyLabels = $state(false)
-let _showIntlBackslash = $state(false)
+let _hideKeyLabels = $state(LocalStorage.getItem('hideKeyLabels') === "true")
+let _showIntlBackslash = $state(LocalStorage.getItem('showIntlBackslash') === "true")
+let _singlePressDetection = $state(LocalStorage.getItem('singlePressDetection') === 'true')
 
-let _displayMode: DisplayMode = $state(DisplayMode.Default);
+let _keyboardType: KeyboardType = $state(LocalStorage.getItem('keyboardType') as any);
+let _displayMode: DisplayMode = $state(LocalStorage.getItem('displayMode', DisplayMode.Default) as any);
 let _selectedKeys: Key[] = $state([]);
-let _numpadEnabled = $state(true);
 
-let _layoutKey: KeyboardLayoutsKeys = $state('QWERTY')
+let _layoutKey: KeyboardLayoutsKeys = $state(LocalStorage.getItem('layoutKey', 'QWERTY') as any)
 let _layout: KeyboardRows = $derived(KeyboardLayouts.getLayout(_layoutKey))
-
-if (browser) {
-    _showIntlBackslash = (localStorage.getItem('showIntlBackslash') === "true");
-    _numpadEnabled = (localStorage.getItem('numpadEnabled') === "true");
-    _hideKeyLabels = (localStorage.getItem('hideKeyLabels') === "true");
-    _displayMode = localStorage.getItem('displayMode') as any ?? DisplayMode.Default;
-    _layoutKey = localStorage.getItem('layoutKey') as any ?? 'QWERTY';
-}
+LocalStorage.setItem('visitedBefore', 1);
 
 const Page = {
     get showIntlBackslash() {
@@ -31,14 +24,6 @@ const Page = {
     set showIntlBackslash(value) {
         _showIntlBackslash = value;
         localStorage.setItem('showIntlBackslash', `${value}`);
-    },
-
-    get numpadEnabled() {
-        return _numpadEnabled;
-    },
-    set numpadEnabled(value) {
-        _numpadEnabled = value;
-        localStorage.setItem('numpadEnabled', `${value}`);
     },
 
     get hideKeyLabels() {
@@ -57,18 +42,18 @@ const Page = {
         localStorage.setItem('displayMode', value);
     },
 
+    get showHelp() {
+        return _showHelp
+    },
+    set showHelp(value) {
+        _showHelp = value;
+    },
+
     get showOptions() {
         return _showOptions;
     },
     set showOptions(value) {
         _showOptions = value;
-    },
-
-    get editDrawer() {
-        return _showEdit;
-    },
-    set editDrawer(value) {
-        _showEdit = value;
     },
 
     get layout() {
@@ -81,7 +66,23 @@ const Page = {
     set layoutKey(value) {
         _layoutKey = value;
         localStorage.setItem('layoutKey', value);
-    }
+    },
+
+    get keyboardType() {
+        return _keyboardType;
+    },
+    set keyboardType(value) {
+        _keyboardType = value;
+        localStorage.setItem('keyboardType', value);
+    },
+
+    get singlePressDetection() {
+        return _singlePressDetection;
+    },
+    set singlePressDetection(value) {
+        _singlePressDetection = value;
+        localStorage.setItem('singlePressDetection', `${value}`);
+    },
 }
 
 export default Page;

@@ -1,4 +1,5 @@
 import { browser } from "$app/environment";
+import LocalStorage from "$lib/utils/LocalStorage.svelte";
 
 enum ThemesEnum {
     Dark = 'dark',
@@ -9,31 +10,23 @@ enum ThemesEnum {
     Toxic = 'toxic',
 }
 
-let currentTheme: ThemesEnum = $state(ThemesEnum.Dark);
-function setCurrentTheme(value: ThemesEnum) {
-    localStorage.setItem('theme', value);
-
-    if (currentTheme === ThemesEnum.Dark)
-        document.documentElement.removeAttribute('data-theme');
-    else document.documentElement.setAttribute('data-theme', currentTheme);
-}
-
-if (browser) {
-    currentTheme = localStorage.getItem('theme') as any ?? ThemesEnum.Dark;
-    setCurrentTheme(currentTheme);
-}
+let currentTheme: ThemesEnum = $state(LocalStorage.getItem('theme', !browser ? ThemesEnum.Light : window.matchMedia?.('(prefers-color-scheme: dark)').matches ? ThemesEnum.Dark : ThemesEnum.Light) as any);
 
 const Themes = {
     get available() {
-        return Object.keys(ThemesEnum);
+        return Object.entries(ThemesEnum);
     },
 
     get current() {
         return currentTheme;
     },
+
     set current(value) {
         currentTheme = value;
-        setCurrentTheme(value);
+        LocalStorage.setItem('theme', value);
+        if (currentTheme === ThemesEnum.Dark)
+            document.documentElement.removeAttribute('data-theme');
+        else document.documentElement.setAttribute('data-theme', currentTheme);
     }
 };
 

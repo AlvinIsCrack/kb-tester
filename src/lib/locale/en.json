@@ -1,4 +1,13 @@
 {
+  "help.close": "Click anywhere on the screen to close the help screen",
+
+  "help.keylog": "<h1>Key Log</h1> Displays a chronological list of recent key presses, including the time in milliseconds between each press. This log is crucial for diagnosing keyboard issues, such as chattering or inconsistent key registration. It provides a precise record of every key actuation, allowing you to identify erratic behavior that may not be obvious during normal use.",
+  "help.keylog.legend": "<li>Shows the time in milliseconds since the previous key was pressed.</li><li>Indicates the group of keys that were recently pressed.</li>",
+
+  "help.keyboard": "<h1>Keyboard</h1> An interactive virtual keyboard that visualizes which keys are being pressed on your physical keyboard. This tool helps you test and diagnose your keyboard's functionality by displaying key actuations in real time. Due to browser limitations, this tool cannot detect FN keys or media keys. FN keys aren't individually interpreted by the system, and media keys are often handled at the operating system level, which prevents web browsers from recognizing their specific presses.",
+  "help.keyboard.keystates": "<span class='keystate-default'>A</span> The key has not been pressed.\n<span class='keystate-active'>A</span> The key is currently being pressed.\n<span class='keystate-used'>A</span> The key was previously pressed.\n<span class='keystate-alert'>A</span> The key was pressed twice.\n<span class='keystate-warning'>A</span> The key was pressed twice quickly.\n<span class='keystate-critical'>A</span> The key was pressed twice very quickly.",
+  "help.keyboard.legend": "<li>Shows the number of times a key has been pressed.</li><li>Displays the key's label or icon.</li><li>The color of the key represents its current state.</li><li>Hover over a key to see its name in a tooltip.</li>",
+
   "app.warning.fnkeys": "FN keys cannot be tested, as they are not interpreted by the system by themselves.",
   "app.total-keys-pressed": "Total Key Presses",
 
@@ -38,21 +47,41 @@
   "key.tooltips.times-pressed": "Times pressed",
   "key.tooltips.ms-since-last": "Time since last press <fade>(ms)</fade>",
 
-  "visibility.hide-keylabels": "Hide Key Labels",
-  "visibility.show-intl-backslash": "Show Intl Backslash",
-  "visibility.keyboardlayout": "Keyboard layout",
-  "visibility.theme": "Theme",
-  "visibility.theme.Dark": "Dark",
-  "visibility.theme.Light": "Light",
-  "visibility.displaymode": "Display mode",
-  "visibility.displaymode.default": "Default",
-  "visibility.displaymode.keytype": "Key groups",
+  "settings.os": "Operating System",
+  "settings.hide-keylabels": "Hide Key Labels",
+  "settings.show-intl-backslash": "Show Intl Backslash",
+  "settings.single-press-detection": "Only one press per key",
+  "settings.keyboardlayout": "Keyboard layout",
+  "settings.theme": "Theme",
+  "settings.theme.dark": "Dark",
+  "settings.theme.light": "Light",
+  "settings.displaymode": "Display mode",
+  "settings.displaymode.default": "Default",
+  "settings.displaymode.keytype": "Key groups",
+  "settings.keyboardtype": "Keyboard Type",
+  "settings.keyboardtype.fullsize": "Full size <fade>(100%)</fade>",
+  "settings.keyboardtype.tkl": "TKL <fade>(Tenkeyless)</fade>",
+  "settings.keyboardtype.40": "40%",
+  "settings.keyboardtype.60": "60%",
+  "settings.keyboardtype.65": "65%",
+  "settings.keyboardtype.75": "75%",
+  "settings.keyboardtype.1800": "1800",
+  
+  "settings.tooltip.single-press-detection": "Only register and process a single press per key",
 
+  "buttons.contact": "Contact",
   "buttons.toggle-numpad": "Toggle Numpad",
-  "buttons.visibility": "Settings",
+  "buttons.settings": "Settings",
   "buttons.reset": "Reset Keyboard",
   "buttons.clear-log": "Clear Key Log",
   "buttons.toggle-log": "Clear Key Log",
+  "buttons.show-help": "Show help",
+
+  "buttons.tooltip.reset": "Resets all key states <shortcut>Ctrl+R</shortcut>",
+  "buttons.tooltip.clear-log": "Clears the key log <shortcut>Ctrl+C</shortcut>",
+  "buttons.tooltip.toggle-log": "Toggle key log <shortcut>Ctrl+L</shortcut>",
+  "buttons.tooltip.show-help": "Shows the help menu",
+  "buttons.tooltip.settings": "Change display mode, visibility and theme",
 
   "keytype.alpha": "Alphabetic",
   "keytype.modifier": "Modifier",
@@ -62,11 +91,6 @@
   "keytype.function": "Functional",
   "keytype.numpad": "Numeric Keypad",
   "keytype.lock": "Lock",
-
-  "buttons.tooltip.reset": "Resets all key states <shortcut>Ctrl+R</shortcut>",
-  "buttons.tooltip.clear-log": "Clears the key log <shortcut>Ctrl+C</shortcut>",
-  "buttons.tooltip.toggle-log": "Toggle key log <shortcut>Ctrl+L</shortcut>",
-  "buttons.tooltip.visibility": "Visibility settings",
 
   "key.KeyA.tooltip": "Key A",
   "key.KeyB.tooltip": "Key B",

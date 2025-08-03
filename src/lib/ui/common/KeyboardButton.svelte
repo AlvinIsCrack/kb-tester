@@ -19,7 +19,7 @@
 		const _ = [Page.showIntlBackslash];
 
 		return tv({
-			base: 'relative text-muted-foreground bg-background select-none flex justify-center items-center text-nowrap h-12 aspect-[.925] rounded-sm gap-1 p-2 px-3 border-1 hover:ring-3 hover:cursor-pointer hover:ring-foreground',
+			base: 'relative text-muted-foreground bg-background select-none flex justify-center items-center text-nowrap h-12 aspect-[.925] rounded-xs gap-1 p-2 px-3 border-1 hover:ring-3 hover:cursor-pointer hover:ring-foreground',
 			variants: {
 				wasPressed: {
 					false: '',
@@ -48,14 +48,14 @@
 					[Key.ShiftRight]: 'aspect-[2.54375] w-full justify-end', // 2.75u
 
 					// Fila 5 (Bottom Row)
-					[Key.ControlLeft]: 'aspect-[1.15625] justify-start', // 1.25u
+					[Key.ControlLeft]: 'aspect-[1.15625] justify-center', // 1.25u
 					[Key.MetaLeft]: 'aspect-[1.15625]', // 1.25u
-					[Key.AltLeft]: 'aspect-[1.15625] justify-start', // 1.25u
+					[Key.AltLeft]: 'aspect-[1.15625] justify-center', // 1.25u
 					[Key.Space]: 'w-full', // El espacio es un caso especial
 
-					[Key.AltRight]: 'aspect-[1.15625] justify-end', // 1.25u
+					[Key.AltRight]: 'aspect-[1.15625] justify-center', // 1.25u
 					[Key.ContextMenu]: 'aspect-[1.15625]', // 1.25u
-					[Key.ControlRight]: 'aspect-[1.15625] justify-end', // 1.25u
+					[Key.ControlRight]: 'aspect-[1.15625] justify-center', // 1.25u
 
 					// Teclas especiales sin ancho modificado
 					[Key.Escape]: 'justify-start',
@@ -67,7 +67,7 @@
 				},
 				display: {
 					false: '',
-					true: 'cursor-default! w-6 h-6 border-1 text-sm rounded-sm scale-90 shadow-md/50 p-4 justify-center bg-keyused text-keyused-foreground'
+					true: 'cursor-default! w-6 h-6 border-1 text-sm rounded-sm scale-90 shadow-sm p-4 justify-center bg-keyused text-keyused-foreground'
 				},
 				speed: {
 					[KeyPressSpeed.Normal]: '',
@@ -99,9 +99,13 @@
 		return untrack(() => Input.timesPressed(key));
 	});
 
-	const layoutKeys = $derived(
-		keyDisplays[key as keyof typeof keyDisplays] ?? { text: key.replace(/digit|numpad|key/i, '') }
-	);
+	const layoutKeys = $derived.by(() => {
+		const base = keyDisplays[key as keyof typeof keyDisplays] ?? {
+			text: key.replace(/digit|numpad|key/i, '')
+		};
+
+		return base;
+	});
 
 	let ready = $state(false);
 
@@ -113,8 +117,18 @@
 </script>
 
 {#if key !== Key.IntlBackslash || Page.showIntlBackslash}
+	{@const typeKey = Page.displayMode === DisplayMode.KeyType ? keyTypeMapping[key] : undefined}
 	<div
-		use:tooltip={{ content: tr(`key.${key}.tooltip`) }}
+		use:tooltip={{
+			content: [
+				tr(`key.${key}.tooltip`),
+				...(typeKey
+					? [
+							`<span class="keytype-overlay-${typeKey} rounded-sm border px-1 ml-1">${tr(`keytype.${typeKey}`)}</span>`
+						]
+					: [])
+			].join(' ')
+		}}
 		onclick={() => {
 			if (display) return;
 		}}
@@ -129,22 +143,25 @@
 	>
 		{#if timesPressed > 0}
 			<div
-				class="absolute top-0 right-0 px-1 text-xs opacity-50 {display
-					? 'flex aspect-square translate-x-1/3 -translate-y-1/3 items-center justify-center text-foreground opacity-100 text-shadow-sm/100'
+				class="pointer-events-none absolute top-0 right-0 px-1 text-xs opacity-50 {display
+					? 'flex aspect-square translate-x-1/3 -translate-y-1/3 items-center justify-center font-bold text-foreground opacity-100 text-shadow-sm/100 text-shadow-background'
 					: ''}"
 			>
 				{timesPressed}
 			</div>
 		{/if}
 
-		{#if layoutKeys.icon}
+		{#if (display || !Page.hideKeyLabels) && layoutKeys.icon}
 			{@const Icon = layoutKeys.icon}
-			<div class="absolute flex h-full w-full items-center justify-center">
+			<div
+				transition:fade={{ duration: 100 }}
+				class="absolute flex h-full w-full items-center justify-center"
+			>
 				<Icon class="inline scale-150" />
 			</div>
 		{/if}
 
-		{#if !Page.hideKeyLabels && layoutKeys.text}
+		{#if (display || !Page.hideKeyLabels) && layoutKeys.text}
 			<div
 				transition:fade={{ duration: 100 }}
 				class="absolute text-center leading-3.5 {layoutKeys.text.replace(/\s+/g, '').length >= 3
@@ -157,12 +174,10 @@
 			</div>
 		{/if}
 
-		{#if !display && Page.displayMode === DisplayMode.KeyType}
+		{#if !display && typeKey}
 			<div
 				transition:fade={{ duration: 200 }}
-				class="pointer-events-none absolute top-0 left-0 h-full w-full overflow-hidden rounded-sm keytype-overlay-{keyTypeMapping[
-					key
-				]}"
+				class="pointer-events-none absolute top-0 left-0 h-full w-full overflow-hidden rounded-sm keytype-overlay-{typeKey}"
 			></div>
 		{/if}
 	</div>

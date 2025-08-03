@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { clickOutside } from '$lib/helpers/actions';
+	import Close from '$lib/icons/close.svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
 	import { fade } from 'svelte/transition';
 	import { tv } from 'tailwind-variants';
@@ -7,9 +8,10 @@
 	const dialog = tv({
 		base: 'absolute pointer-events-auto top-0 left-0 z-[1000] flex h-full w-full items-center justify-center bg-black/50',
 		slots: {
-			container: 'relative shadow-lg/50 rounded-lg border p-4 bg-background text-foreground pt-10',
+			container:
+				'relative shadow-lg/50 min-w-xs rounded-lg border p-4 bg-background text-foreground pt-10',
 			closeButton:
-				'absolute top-2 right-2 p-1 rounded-sm aspect-square w-6 h-6 flex justify-center cursor-pointer hover:bg-keycritical/50 items-center bg-keycritical text-keycritical-foreground text-sm font-bold'
+				'absolute top-2 right-2 p-1 rounded-sm aspect-square w-8 h-auto [&>svg]:scale-150 flex justify-center cursor-pointer hover:bg-keycritical/50 items-center bg-keycritical text-keycritical-foreground text-sm font-bold'
 		}
 	});
 	const { base, container, closeButton } = dialog({});
@@ -44,7 +46,7 @@
 				}}
 				class={container({})}
 			>
-				<button onclick={() => (show = false)} class={closeButton()}> X </button>
+				<button onclick={() => (show = false)} class={closeButton()}> <Close /> </button>
 				{@render children?.()}
 			</div>
 		{/if}

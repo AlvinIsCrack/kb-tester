@@ -1,6 +1,7 @@
 import { browser } from "$app/environment";
 import { Key, KeyPressSpeed, type KeyboardState, type MouseState } from "$lib/global/keyboard.svelte";
 import Sound from "$lib/utils/Sound";
+import Page from "./page.svelte";
 
 let _initialized = $state(false);
 
@@ -47,16 +48,13 @@ function wasRecentlyFast(key: string) {
 if (browser) {
     window.addEventListener('keydown', async (event) => {
         console.debug(event);
+
         event.preventDefault();
         if (event.repeat) return;
-
-        if (event.code === Key.ControlLeft) {
-            await new Promise((r) => setTimeout(r, 2));
-            if (keyboard.keys[Key.AltRight]) return;
-        }
+        const key = event.code as Key;
 
         if (event.ctrlKey) {
-            switch (event.code) {
+            switch (key) {
                 case Key.R:
                     reset();
                     return;
@@ -68,32 +66,38 @@ if (browser) {
             }
         }
 
-        Sound.playKey(event.code as Key);
+        if (key === Key.ControlLeft) {
+            await new Promise((r) => setTimeout(r, 2));
+            if (keyboard.keys[Key.AltRight]) return;
+        }
 
-        keyboard.keys[event.code] = true;
-        _keyboardLog.push(event.code as Key);
-        if (!(event.code in _keyboardPressTimes)) _keyboardPressTimes[event.code] = [];
-        _keyboardPressTimes[event.code].push(Date.now());
+        Sound.playKey(key);
+
+        if (Page.singlePressDetection && key in _keyboardPressTimes) return;
+        keyboard.keys[key] = true;
+        _keyboardLog.push(key);
+        if (!(key in _keyboardPressTimes)) _keyboardPressTimes[key] = [];
+        _keyboardPressTimes[key].push(Date.now());
         _totalKeyPress += 1;
 
-        const speed = getSpeedOfKey(event.code);
+        const speed = getSpeedOfKey(key);
         const FAST_PRESS_TIMEOUT = 400;
 
         if (speed !== KeyPressSpeed.Normal) {
             // Si ya hay un temporizador para esta tecla, lo limpiamos para reiniciarlo.
-            if (_recentFastPresses[event.code]) {
-                clearTimeout(_recentFastPresses[event.code]);
+            if (_recentFastPresses[key]) {
+                clearTimeout(_recentFastPresses[key]);
             }
             // Creamos un nuevo temporizador que eliminará la tecla del estado de "reciente".
-            _recentFastPresses[event.code] = window.setTimeout(() => {
-                delete _recentFastPresses[event.code];
+            _recentFastPresses[key] = window.setTimeout(() => {
+                delete _recentFastPresses[key];
             }, FAST_PRESS_TIMEOUT);
         }
     });
 
     window.addEventListener("keyup", (event) => {
         event.preventDefault();
-        keyboard.keys[event.code] = false;
+        keyboard.keys[event.code as Key] = false;
     });
 
     window.addEventListener("mousedown", (event) => {

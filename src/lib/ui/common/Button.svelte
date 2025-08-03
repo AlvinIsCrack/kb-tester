@@ -5,12 +5,11 @@
 	import { tooltip } from './Tooltip.svelte';
 
 	const button = tv({
-		base: 'relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:text-muted-foreground disabled:pointer-events-none disabled:opacity-60 cursor-pointer active:bg-primary/40 [&>svg]:scale-130',
+		base: 'relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:text-muted-foreground disabled:pointer-events-none disabled:opacity-60 cursor-pointer active:bg-primary/40  [&>svg]:h-full [&>svg]:w-auto [&>svg]:aspect-square [&>svg]:p-1.5',
 		variants: {
 			variant: {
-				primary:
-					'bg-primary text-primary-foreground hover:text-primary-foreground/80 hover:ring-2 hover:ring-inset hover:ring-primary-foreground/50',
-				ghost: 'bg-secondary/50 text-foreground hover:bg-secondary'
+				primary: 'bg-primary text-primary-foreground hover:bg-primary/60',
+				ghost: 'bg-secondary/40 text-foreground hover:bg-secondary'
 			},
 			size: {
 				default: 'h-9 px-4 py-1',
@@ -32,6 +31,7 @@
 		startDecorator,
 		children,
 		href,
+		class: _class,
 		tooltip: _tooltip,
 		size,
 		...props
@@ -43,10 +43,14 @@
 		} = $props();
 </script>
 
-<button use:tooltip={{ content: _tooltip }} class={button({ variant, size })} {...props}>
+<button
+	use:tooltip={{ content: _tooltip }}
+	class={button({ variant, size, class: _class })}
+	{...props}
+>
 	{#if startDecorator}
 		{@const Decorator = startDecorator}
-		<Decorator class="mr-2 -ml-1 inline" />
+		<Decorator class="-ml-2.5 inline" />
 	{/if}
 	{@render children?.()}
 	{#if href}

@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { clickOutside } from '$lib/helpers/actions';
 	import { circOut } from 'svelte/easing';
-	import type { HTMLAttributes } from 'svelte/elements';
+	import type { ClassValue, HTMLAttributes } from 'svelte/elements';
 	import { fade } from 'svelte/transition';
 	import { tv } from 'tailwind-variants';
 
 	const drawer = tv({
-		base: 'fixed pointer-events-auto bottom-0 left-0 z-[1000] flex h-full w-full items-end justify-center bg-black/50',
+		base: 'fixed pointer-events-auto bottom-0 left-0 z-[800] flex h-full w-full items-end justify-center bg-black/50',
 		slots: {
 			container:
 				'relative shadow-lg/50 border-t min-h-60 rounded-t-lg p-4 bg-background/50 text-foreground pt-10 w-full transition-transform duration-200 ease-out select-none flex justify-center items-center'
@@ -19,9 +19,11 @@
 		show = $bindable(),
 		children,
 		closeOnOutsideClick = true,
+		containerClass,
 		...props
 	}: {
 		show?: boolean;
+		containerClass?: ClassValue;
 		closeOnOutsideClick?: boolean;
 	} & HTMLAttributes<HTMLDivElement> = $props();
 
@@ -84,7 +86,7 @@
 					if (closeOnOutsideClick) show = false;
 				}
 			}}
-			class={container({})}
+			class="{container({})} {containerClass}"
 			class:!transition-none={isDragging}
 			style:transform="translateY({translateY}px)"
 		>

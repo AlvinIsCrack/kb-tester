@@ -7,16 +7,18 @@ const languages: { [code: string]: { [key: string]: string } } = {
     es
 }
 
-let _lang: typeof en | undefined = $state(undefined);
-if (browser) {
+let _lang: typeof en = $state((() => {
+    if (!browser) return en;
+
     const browserLanguage = window.navigator.language;
-    _lang = languages[browserLanguage] as any;
-    _lang ??= languages[browserLanguage.split('-').at(0) ?? ''] as any;
-    if (!_lang) {
+    let lang: typeof en = languages[browserLanguage] as any;
+    lang ??= languages[browserLanguage.split('-').at(0) ?? ''] as any;
+    if (!lang) {
         console.warn('Fallback language applied')
-        _lang = en;
+        lang = en;
     }
-}
+    return lang;
+})());
 
 
 export function tr(key: keyof typeof en, ...args: string[]): string | undefined {

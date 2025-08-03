@@ -323,7 +323,8 @@ export const keyDisplays: { [key: string]: { icon?: Component; text?: string; } 
     [Key.Home]:
         { text: tr('key.home-display') },
     [Key.End]:
-        { text: tr('key.end-display') }
+        { text: tr('key.end-display') },
+
 } as const;
 
 export const keyTypeMapping: Record<Key, KeyType> = {
@@ -465,3 +466,13 @@ export const keyTypeMapping: Record<Key, KeyType> = {
     [Key.MetaLeft]: KeyType.System,
     [Key.MetaRight]: KeyType.System,
 } as const;
+
+export enum KeyboardType {
+    FullSize = "fullsize",
+    TKL = "tkl",          // Tenkeyless (sin numpad)
+    Compact60 = "60",     // 60% (sin flechas, F keys, ni numpad)
+    // Compact75 = "75",     // 75% (con flechas)
+    // Compact65 = "65",     // 65% (con flechas compactas)
+    // Compact40 = "40",     // 40% (mínimo)
+    // Layout1800 = "1800"   // 1800 layout (compacto con numpad)
+}

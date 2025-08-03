@@ -49,14 +49,17 @@
 	</div> -->
 	<div
 		transition:fly={{ duration: 200, y: -5 }}
-		class="mt-2 flex h-fit w-1/2 flex-col items-center justify-center gap-10 overflow-visible rounded-lg"
+		id="keylog"
+		class="mt-4 flex h-fit w-1/2 flex-col items-center justify-center gap-10 overflow-visible rounded-lg"
 	>
-		<div class="relative flex h-min w-full flex-row items-center justify-center gap-1">
-			{#if visibleKeys.length}
+		<div class="relative flex h-min min-h-20 w-full flex-row items-center justify-center gap-1">
+			{#if !visibleKeys.length}
+				<div transition:fade={{ duration: 200 }} class="absolute w-1/2 rounded-md border-b-6"></div>
+			{:else}
 				<div
 					transition:fade={{ duration: 200 }}
 					style="--mask-opacity: {(1 - Math.min(visibleKeys.length / 20, 1)) * 100}%"
-					class="keylog flex flex-row items-center justify-end px-8 py-8 will-change-transform"
+					class="keylog flex flex-row items-center justify-end px-8 pt-4 pb-2 will-change-transform"
 				>
 					{#each visibleKeys as { date, key }, i (date)}
 						{@const group = (() => {
@@ -72,7 +75,7 @@
 						<div class="relative h-min" animate:flip={{ duration: 200, easing: circOut }}>
 							<KeyboardButton display {key} />
 							<div
-								class="absolute top-0 flex w-full origin-top -translate-y-[100%] scale-90 flex-col items-center justify-center text-center text-sm text-nowrap text-muted-foreground italic"
+								class="pointer-events-none absolute top-0 flex w-full origin-top -translate-y-[100%] scale-90 flex-col items-center justify-center text-center text-sm text-nowrap text-muted-foreground italic"
 							>
 								{#if i > 0}
 									{@const time = Time.formatMS(date - visibleKeys[i - 1].date)}
