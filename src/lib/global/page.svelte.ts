@@ -9,7 +9,7 @@ let _hideKeyLabels = $state(LocalStorage.getItem('hideKeyLabels') === "true")
 let _showIntlBackslash = $state(LocalStorage.getItem('showIntlBackslash') === "true")
 let _singlePressDetection = $state(LocalStorage.getItem('singlePressDetection') === 'true')
 
-let _keyboardType: KeyboardType = $state(LocalStorage.getItem('keyboardType') as any);
+let _keyboardType: KeyboardType = $state(LocalStorage.getItem('keyboardType', KeyboardType.FullSize) as any);
 let _displayMode: DisplayMode = $state(LocalStorage.getItem('displayMode', DisplayMode.Default) as any);
 let _selectedKeys: Key[] = $state([]);
 
