@@ -8,6 +8,9 @@
 	import { flip } from 'svelte/animate';
 	import { circOut } from 'svelte/easing';
 
+	const DURATION = 250;
+	const STAGGER = 150;
+
 	const config = $derived(getKeyboardConfig(Page.keyboardType));
 
 	const gap = 'gap-0.5';
@@ -48,7 +51,8 @@
 	<div class={keyboard({ size: 'full' })}>
 		{#if config.fnKeys?.length}
 			<div
-				transition:slide|global={{ axis: 'y' }}
+				in:slide|global={{ axis: 'y', duration: DURATION, delay: 0 }}
+				out:slide|global={{ axis: 'y', duration: DURATION, delay: STAGGER * 2 }}
 				class="{specialRow({ size: 'full' })} justify-between!"
 			>
 				{#each config.fnKeys as row, i (i)}
@@ -81,7 +85,11 @@
 	</div>
 
 	{#if config.navKeys?.length || config.showArrows}
-		<div transition:slide={{ axis: 'x' }} class="{keyboard({})} justify-between!">
+		<div
+			in:slide={{ axis: 'x', duration: DURATION, delay: STAGGER }}
+			out:slide={{ axis: 'x', duration: DURATION, delay: STAGGER }}
+			class="{keyboard({})} justify-between!"
+		>
 			{#if config.specialKeys.length > 0}
 				<div
 					transition:slide|global={{ axis: 'y', duration: 1 }}
@@ -127,7 +135,11 @@
 	{/if}
 
 	{#if config.showNumpad}
-		<div transition:slide={{ axis: 'x' }} class="{keyboard({})} {numpad({})} mt-auto">
+		<div
+			in:slide={{ axis: 'x', duration: DURATION, delay: STAGGER * 2 }}
+			out:slide={{ axis: 'x', duration: DURATION, delay: 0 }}
+			class="{keyboard({})} {numpad({})} mt-auto"
+		>
 			{#each [Key.NumLock, Key.NumpadDivide, Key.NumpadMultiply, Key.NumpadSubtract, Key.Numpad7, Key.Numpad8, Key.Numpad9, Key.NumpadAdd, Key.Numpad4, Key.Numpad5, Key.Numpad6, Key.Numpad1, Key.Numpad2, Key.Numpad3, Key.NumpadEnter, Key.Numpad0, Key.NumpadDecimal] as key (key)}
 				<div
 					animate:flip={{ duration: 200, easing: circOut }}
