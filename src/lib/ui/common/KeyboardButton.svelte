@@ -19,7 +19,7 @@
 		const _ = [Page.showIntlBackslash];
 
 		return tv({
-			base: 'relative text-muted-foreground bg-background select-none flex justify-center items-center text-nowrap h-12 aspect-[.925] rounded-xs gap-1 p-2 px-3 border-1 hover:ring-3 hover:cursor-pointer hover:ring-foreground',
+			base: 'relative text-center text-muted-foreground bg-background select-none flex justify-center items-center text-nowrap h-12 aspect-[.925] rounded-xs gap-1 p-2 px-3 border-1 hover:ring-3 hover:cursor-pointer hover:ring-foreground',
 			variants: {
 				wasPressed: {
 					false: '',
@@ -35,27 +35,25 @@
 
 					// Fila 2
 					[Key.Tab]: 'aspect-[1.3875] justify-center', // 1.5u
-					[Key.Backslash]: 'aspect-[1.3875] justify-end', // 1.5u
+					[Key.Backslash]: 'aspect-[1.3875] justify-end text-end', // 1.5u
 
 					// Fila 3
-					[Key.CapsLock]: 'aspect-[1.61875] justify-start text-left', // 1.75u
-					[Key.Enter]: 'aspect-[2.08125] w-full justify-center', // 2.25u
+					[Key.CapsLock]: 'w-full justify-start text-left', // 1.75u
+					[Key.Enter]: 'aspect-[2] w-full justify-center', // 2.25u
 
 					// Fila 4
-					[Key.ShiftLeft]: `${
-						Page.showIntlBackslash ? 'w-full' : 'aspect-[2.08125]'
-					} justify-start`, // 2.25u
-					[Key.ShiftRight]: 'aspect-[2.54375] w-full justify-end', // 2.75u
+					[Key.ShiftLeft]: `w-full justify-start`, // 2.25u
+					[Key.ShiftRight]: 'aspect-[2.4] w-full justify-end text-end', // 2.75u
 
 					// Fila 5 (Bottom Row)
-					[Key.ControlLeft]: 'aspect-[1.15625] justify-center', // 1.25u
-					[Key.MetaLeft]: 'aspect-[1.15625]', // 1.25u
-					[Key.AltLeft]: 'aspect-[1.15625] justify-center', // 1.25u
+					[Key.ControlLeft]: 'aspect-[1.2] justify-center', // 1.25u
+					[Key.MetaLeft]: 'aspect-[1.2]', // 1.25u
+					[Key.AltLeft]: 'aspect-[1.2] justify-center', // 1.25u
 					[Key.Space]: 'w-full', // El espacio es un caso especial
 
-					[Key.AltRight]: 'aspect-[1.15625] justify-center', // 1.25u
-					[Key.ContextMenu]: 'aspect-[1.15625]', // 1.25u
-					[Key.ControlRight]: 'aspect-[1.15625] justify-center', // 1.25u
+					[Key.AltRight]: 'aspect-[1.2] justify-center', // 1.25u
+					[Key.ContextMenu]: 'aspect-[1.2]', // 1.25u
+					[Key.ControlRight]: 'aspect-[1.2] justify-center', // 1.25u
 
 					// Teclas especiales sin ancho modificado
 					[Key.Escape]: 'justify-start',
@@ -164,6 +162,7 @@
 		{#if (display || !Page.hideKeyLabels) && layoutKeys.text}
 			<div
 				transition:fade={{ duration: 100 }}
+				style:text-align="inherit"
 				class="absolute text-center leading-3.5 {layoutKeys.text.replace(/\s+/g, '').length >= 3
 					? 'text-sm'
 					: ''}"
