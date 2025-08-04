@@ -14,7 +14,7 @@ let _displayMode: DisplayMode = $state(LocalStorage.getItem('displayMode', Displ
 let _selectedKeys: Key[] = $state([]);
 
 let _layoutKey: KeyboardLayoutsKeys = $state(LocalStorage.getItem('layoutKey', 'QWERTY') as any)
-let _layout: KeyboardRows = $derived(KeyboardLayouts.getLayout(_layoutKey))
+let _layout: KeyboardRows = $derived(KeyboardLayouts.layout[_layoutKey])
 LocalStorage.setItem('visitedBefore', 1);
 
 const Page = {

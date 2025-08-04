@@ -48,6 +48,7 @@ export enum KeyType {
  * @see https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_code_values
  */
 export enum Key {
+    Space2 = "Space2",
     // --- Teclas Alfanuméricas (Sección principal) ---
 
     // Letras
@@ -320,6 +321,8 @@ export const keyDisplays: { [key: string]: { icon?: Component; text?: string; } 
         { icon: Enter },
     [Key.Space]:
         { icon: Spacebar },
+    [Key.Space2]:
+        { icon: Spacebar },
     [Key.Home]:
         { text: tr('key.home-display') },
     [Key.End]:
@@ -379,6 +382,7 @@ export const keyTypeMapping: Record<Key, KeyType> = {
     [Key.Slash]: KeyType.Alpha,
     [Key.IntlBackslash]: KeyType.Alpha,
     [Key.Space]: KeyType.Alpha,
+    [Key.Space2]: KeyType.Alpha,
 
     // --- KeyType.Modifier ---
     // Keys that modify the behavior of other keys.

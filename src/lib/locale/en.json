@@ -151,6 +151,7 @@
   "key.Enter.tooltip": "Enter",
   "key.Tab.tooltip": "Tab",
   "key.Space.tooltip": "Space",
+  "key.Space2.tooltip": "Space",
   "key.Backspace.tooltip": "Backspace",
   "key.Escape.tooltip": "Escape",
   "key.CapsLock.tooltip": "Caps Lock",

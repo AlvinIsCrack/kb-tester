@@ -33,12 +33,14 @@ const COLEMAK: KeyboardRows = [
     [Key.ControlLeft, Key.MetaLeft, Key.AltLeft, Key.Space, Key.AltRight, Key.ContextMenu, Key.ControlRight]
 ] as const;
 
-const _layouts = {
-    QWERTY,
-    AZERTY,
-    DVORAK,
-    COLEMAK,
-} as const;
+const _layouts = $derived(
+    {
+        QWERTY,
+        AZERTY,
+        DVORAK,
+        COLEMAK,
+    }
+);
 
 const _layoutsKeys = Object.keys(_layouts);
 export type KeyboardLayoutsType = keyof typeof _layouts;
@@ -47,8 +49,8 @@ const KeyboardLayouts = {
     get available() {
         return _layoutsKeys;
     },
-    getLayout(key: keyof typeof _layouts) {
-        return _layouts[key];
+    get layout() {
+        return _layouts;
     }
 };
 

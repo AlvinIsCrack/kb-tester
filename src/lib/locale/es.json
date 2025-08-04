@@ -151,6 +151,7 @@
   "key.Enter.tooltip": "Intro",
   "key.Tab.tooltip": "Tab",
   "key.Space.tooltip": "Espacio",
+  "key.Space2.tooltip": "Espacio",
   "key.Backspace.tooltip": "Retroceso",
   "key.Escape.tooltip": "Escape",
   "key.CapsLock.tooltip": "Bloqueo de mayúsculas",

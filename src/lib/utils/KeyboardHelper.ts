@@ -19,7 +19,13 @@ const fnKeys = [[Key.Escape],
 const navKeys = [Key.Insert, Key.Home, Key.PageUp, Key.Delete, Key.End, Key.PageDown];
 
 export function getKeyboardConfig(type: KeyboardType): KeyboardConfig {
-    const mainKeys = Page.layout;
+    let mainKeys = [...Page.layout];
+    mainKeys = mainKeys.map((row) =>
+        row.filter((k) => {
+            if (!Page.showIntlBackslash && k === Key.IntlBackslash) return false;
+            return true;
+        })
+    );
 
     switch (type) {
         case KeyboardType.FullSize:
@@ -91,12 +97,16 @@ export function getKeyboardConfig(type: KeyboardType): KeyboardConfig {
         //     };
 
         case KeyboardType.Compact40: {
-            let keys40 = [
+            const keys40 = [
                 [Key.Escape, ...mainKeys[1].slice(1, -3), Key.Backspace],
                 [Key.Tab, ...mainKeys[2].slice(1, -2), Key.Enter],
                 [...mainKeys[3]],
                 [...mainKeys[4]],
             ];
+
+            const spaceIndex = mainKeys[4].indexOf(Key.Space);
+            if (spaceIndex !== -1)
+                keys40[3].splice(spaceIndex + 1, 0, Key.Space2);
 
             return {
                 showNumpad: false,
@@ -106,6 +116,7 @@ export function getKeyboardConfig(type: KeyboardType): KeyboardConfig {
                 mainKeys: keys40
             };
         }
+
 
         default:
             return getKeyboardConfig(KeyboardType.FullSize);
