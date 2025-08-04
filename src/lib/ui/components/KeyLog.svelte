@@ -2,7 +2,7 @@
 	import Input from '$lib/global/input.svelte';
 	import { untrack } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
-	import KeyboardButton from '../common/KeyboardButton.svelte';
+	import KeyboardButton, { kButtonContainer } from '../common/KeyboardButton.svelte';
 	import type { Key } from '$lib/global/keyboard.svelte';
 	import { flip } from 'svelte/animate';
 	import { circOut } from 'svelte/easing';
@@ -75,6 +75,7 @@
 						<div class="relative h-min" animate:flip={{ duration: 200, easing: circOut }}>
 							<KeyboardButton display {key} />
 							<div
+								transition:fly|global={{ y: 10 }}
 								class="pointer-events-none absolute top-0 flex w-full origin-top -translate-y-[100%] scale-90 flex-col items-center justify-center text-center text-sm text-nowrap text-muted-foreground italic"
 							>
 								{#if i > 0}
@@ -91,7 +92,7 @@
 							</div>
 							{#if group}
 								<div
-									transition:fly={{ y: -2 }}
+									transition:fly|global={{ y: -5 }}
 									class="pointer-events-none absolute -bottom-1 flex h-full w-full justify-center"
 								>
 									<div

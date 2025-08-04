@@ -50,7 +50,7 @@
 			},
 			display: {
 				false: '',
-				true: 'cursor-default! w-6 h-6 border-1 text-sm rounded-sm scale-90 shadow-sm p-4 justify-center bg-keyused text-keyused-foreground'
+				true: 'cursor-default! items-center aspect-auto! h-6! border-1 text-sm rounded-sm scale-90 shadow-sm p-4 justify-center bg-keyused text-keyused-foreground'
 			},
 			speed: {
 				[KeyPressSpeed.Normal]: '',
@@ -79,7 +79,7 @@
 	import { tooltip } from './Tooltip.svelte';
 	import { tr } from '$lib/locale/locale.svelte';
 	import { tv } from 'tailwind-variants';
-	import { fade } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
 
 	const {
 		key,
@@ -129,18 +129,19 @@
 	onclick={() => {
 		if (display) return;
 	}}
-	class="{kButton({
+	class="{kButtonContainer({
+		key: key as any
+	})} {kButton({
 		active,
 		speed: active || display || wasRecentlyFast ? speed : KeyPressSpeed.Normal,
 		wasPressed: Input.wasPressed(key),
 		display
-	})} {kButtonContainer({
-		key: key as any
 	})} {_class}"
 	{...props}
 >
 	{#if timesPressed > 0}
 		<div
+			transition:fly|global={{ y: 5, duration: 200 }}
 			class="pointer-events-none absolute top-0 right-0 px-1 text-xs opacity-50 {display
 				? 'flex aspect-square translate-x-1/3 -translate-y-1/3 items-center justify-center font-bold text-foreground opacity-100 text-shadow-sm/100 text-shadow-background'
 				: ''}"
@@ -159,7 +160,9 @@
 	{#if (display || !Page.hideKeyLabels) && layoutKeys.text}
 		<div
 			style:text-align="inherit"
-			class="absolute text-center leading-3.5 {layoutKeys.text.replace(/\s+/g, '').length >= 3
+			class="absolute {display
+				? 'left-1/2 -translate-x-1/2'
+				: ''} text-center leading-3.5 {layoutKeys.text.replace(/\s+/g, '').length >= 3
 				? 'text-sm'
 				: ''}"
 		>
