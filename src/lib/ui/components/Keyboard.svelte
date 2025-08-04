@@ -2,20 +2,22 @@
 	import { tv } from 'tailwind-variants';
 	import KeyboardButton from '../common/KeyboardButton.svelte';
 	import Page from '$lib/global/page.svelte';
-	import { Key } from '$lib/global/keyboard.svelte';
-	import { fade, slide } from 'svelte/transition';
+	import { Key, KeyboardType } from '$lib/global/keyboard.svelte';
+	import { slide } from 'svelte/transition';
 	import { getKeyboardConfig } from '$lib/utils/KeyboardHelper';
 
-	const gap = 'gap-[0.12rem]';
+	const config = $derived(getKeyboardConfig(Page.keyboardType));
+
+	const gap = 'gap-0.5';
 	const { keyboard, keyboardRow, navKeys, arrowKeys, numpad, specialRow } = $derived(
 		tv({
 			slots: {
-				keyboard: 'transition-[margin] duration-200 relative flex-col',
-				keyboardRow: 'flex-row w-full',
-				navKeys: `grid grid-cols-3 grid-rows-2 ${gap} justify-center items-center`,
+				keyboard: 'pointer-events-none transition-[margin] duration-200 relative flex-col',
+				keyboardRow: 'pointer-events-none flex-row w-full',
+				navKeys: `grid ${config.compact ? `translate-x-12 translate-y-13 grid-cols-1 ${!config.fnKeys?.length ? '-mt-13' : ''}` : 'grid-cols-3 grid-rows-2'} ${gap} justify-center items-center h-min flex-nowrap`,
 				arrowKeys: `grid grid-cols-3 grid-rows-2 ${gap} justify-center items-center`,
 				numpad: `grid grid-cols-4 grid-rows-5 ${gap} w-fit justify-center items-center`,
-				specialRow: `flex ${gap} items-center mb-4 flex-row w-full top-0 justify-start`
+				specialRow: `flex ${gap} items-center ${!config.compact ? 'mb-4' : ''} flex-row w-full top-0 justify-start`
 			},
 			compoundSlots: [
 				{
@@ -26,7 +28,7 @@
 			variants: {
 				size: {
 					full: {
-						keyboard: 'w-auto '
+						keyboard: 'w-auto'
 					},
 					addon: {
 						keyboard: 'w-fit ml-5'
@@ -38,51 +40,62 @@
 			}
 		})({})
 	);
-
-	const layout = $derived(Page.layout);
-	const config = $derived(getKeyboardConfig(Page.keyboardType));
 </script>
 
 <div id="keyboard" class="flex flex-row justify-center will-change-transform">
 	<div class={keyboard({ size: 'full' })}>
-		{#if config.showFunctionRow}
-			<div transition:slide={{ axis: 'y' }} class="{specialRow({ size: 'full' })} justify-between!">
-				<KeyboardButton key={Key.Escape} />
-
-				{#each [[Key.F1, Key.F2, Key.F3, Key.F4], [Key.F5, Key.F6, Key.F7, Key.F8], [Key.F9, Key.F10, Key.F11, Key.F12]] as row, i (i)}
-					<div class="w-full"></div>
+		{#if config.fnKeys?.length}
+			<div
+				transition:slide|global={{ axis: 'y' }}
+				class="{specialRow({ size: 'full' })} justify-between!"
+			>
+				{#each config.fnKeys as row, i (i)}
+					{#if i > 0}
+						<div class="w-full"></div>
+					{/if}
 					{#each row as key, j (j)}
 						<KeyboardButton {key} />
 					{/each}
 				{/each}
 			</div>
 		{/if}
-
-		{#each layout as row, i (i)}
+		{#each config.mainKeys as row, i (i)}
 			<div class={keyboardRow({})}>
 				{#each row as key, j (j)}
-					<KeyboardButton {key} />
+					{#if key === Key.Air}
+						<div class="pointer-events-none invisible aspect-[.925] h-12"></div>
+					{:else}
+						<KeyboardButton {key} />
+					{/if}
 				{/each}
 			</div>
 		{/each}
 	</div>
 
-	{#if config.showNavigation || config.showArrows}
-		<div transition:slide={{ axis: 'x' }} class="{keyboard({})} justify-between!">
+	{#if config.navKeys?.length || config.showArrows}
+		<div
+			transition:slide={{ axis: 'x' }}
+			class="{keyboard({})} {config.compact ? '-ml-23!' : ''} justify-between!"
+		>
 			{#if config.specialKeys.length > 0}
-				<div class={specialRow({ size: 'full' })}>
+				<div
+					transition:slide|global={{ axis: 'y', duration: 1 }}
+					class={specialRow({ size: 'full' })}
+				>
 					{#each config.specialKeys as key, i (i)}
 						<KeyboardButton {key} />
 					{/each}
 				</div>
 			{/if}
 
-			<div class={navKeys({})}>
-				{#each [Key.Insert, Key.Home, Key.PageUp, Key.Delete, Key.End, Key.PageDown] as key (key)}
-					<KeyboardButton {key} />
-				{/each}
-			</div>
-			<div class="h-full"></div>
+			{#if config.navKeys}
+				<div class={navKeys({})}>
+					{#each config.navKeys as key (key)}
+						<KeyboardButton {key} />
+					{/each}
+				</div>
+				<div class="h-full"></div>
+			{/if}
 			<div class={arrowKeys({})}>
 				<div></div>
 				<KeyboardButton key={Key.ArrowUp} />

@@ -12,6 +12,7 @@
 	<div class="flex h-full w-full items-center justify-center py-10">
 		<div class="flex max-h-full w-full max-w-1/3 flex-wrap items-center justify-center gap-4">
 			<Select
+				wrapperClass="w-full"
 				label={tr('settings.displaymode')}
 				id="select-displaymode"
 				bind:selected={Page.displayMode}
@@ -21,6 +22,7 @@
 				}))}
 			/>
 			<Select
+				wrapperClass="w-full"
 				label={tr('settings.theme')}
 				id="select-theme"
 				bind:selected={Themes.current}

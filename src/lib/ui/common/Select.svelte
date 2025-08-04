@@ -17,7 +17,7 @@
 	const selectTv = tv({
 		slots: {
 			// Contenedor principal que envuelve el label y el select.
-			wrapper: 'h-fit w-full space-y-1',
+			wrapper: 'h-fit w-min space-y-1',
 			// El label opcional que se muestra encima del select.
 			label: 'block text-sm font-medium text-foreground',
 			// Contenedor relativo para el trigger visual y el select oculto.

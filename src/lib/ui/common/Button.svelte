@@ -5,7 +5,7 @@
 	import { tooltip } from './Tooltip.svelte';
 
 	const button = tv({
-		base: 'relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:text-muted-foreground disabled:pointer-events-none disabled:opacity-60 cursor-pointer active:bg-primary/40  [&>svg]:h-full [&>svg]:w-auto [&>svg]:aspect-square [&>svg]:p-1.5',
+		base: 'relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:text-muted-foreground disabled:pointer-events-none disabled:opacity-60 cursor-pointer active:bg-primary/40 border [&>svg]:h-full [&>svg]:w-auto [&>svg]:aspect-square [&>svg]:p-1.5',
 		variants: {
 			variant: {
 				primary: 'bg-primary text-primary-foreground hover:bg-primary/60',

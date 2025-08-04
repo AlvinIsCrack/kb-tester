@@ -11,12 +11,11 @@
 	import Help from '$lib/icons/help .svelte';
 	import Select from '../common/Select.svelte';
 	import KeyboardLayouts from '$lib/global/kb_layouts.svelte';
-	import KeyboardLayout from '$lib/icons/keyboard-layout.svelte';
-	import KeyboardTypeIcon from '$lib/icons/keyboard-type-icon.svelte';
+	import Keyboard from '$lib/icons/keyboard.svelte';
 </script>
 
 <div class="flex flex-row flex-nowrap justify-between gap-2">
-	<div class="relative w-full">
+	<div class="relative w-full flex-1">
 		<Button
 			tooltip={tr('buttons.tooltip.settings')}
 			size="sm"
@@ -25,24 +24,17 @@
 		>
 			{tr('buttons.settings')}
 		</Button>
-		<Button
-			tooltip={tr('buttons.tooltip.reset')}
-			startDecorator={Reset}
-			size="sm"
-			onclick={Input.reset}
-			variant="ghost"
-		>
-			{tr('buttons.reset')}
+		<Button tooltip={tr('buttons.tooltip.reset')} size="icon" onclick={Input.reset} variant="ghost">
+			<Reset />
 		</Button>
 		<Button
 			tooltip={tr('buttons.tooltip.clear-log')}
 			disabled={!Input.log.length}
-			startDecorator={ClearKeylog}
-			size="sm"
+			size="icon"
 			onclick={Input.clearKeylog}
 			variant="ghost"
 		>
-			{tr('buttons.clear-log')}
+			<ClearKeylog />
 		</Button>
 
 		{#if Page.displayMode === DisplayMode.KeyType}
@@ -60,9 +52,8 @@
 			</div>
 		{/if}
 	</div>
-	<div class="flex w-full flex-row gap-1">
+	<div class="flex w-full flex-1 flex-row justify-end gap-1">
 		<Select
-			icon={KeyboardLayout}
 			class="text-xs"
 			tooltip={tr('settings.keyboardlayout')}
 			id="select-keyboardlayout"
@@ -72,7 +63,7 @@
 			}))}
 		/>
 		<Select
-			icon={KeyboardTypeIcon}
+			icon={Keyboard}
 			tooltip={tr('settings.keyboardtype')}
 			class="text-xs"
 			id="select-size"

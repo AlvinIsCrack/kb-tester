@@ -75,7 +75,7 @@
   "buttons.reset": "Reset Keyboard",
   "buttons.clear-log": "Clear Key Log",
   "buttons.toggle-log": "Clear Key Log",
-  "buttons.show-help": "Show help",
+  "buttons.show-help": "Help",
 
   "buttons.tooltip.reset": "Resets all key states <shortcut>Ctrl+R</shortcut>",
   "buttons.tooltip.clear-log": "Clears the key log <shortcut>Ctrl+C</shortcut>",

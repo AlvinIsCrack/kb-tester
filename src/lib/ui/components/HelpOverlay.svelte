@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, onDestroy, tick } from 'svelte';
+	import { tick, untrack } from 'svelte';
 	import Page from '$lib/global/page.svelte';
 	import type { Action } from 'svelte/action';
 	import { tv } from 'tailwind-variants';
@@ -11,8 +11,8 @@
 
 	const PADDING = 8; // --- LÓGICA INTERNA DEL SISTEMA (MODIFICADA) ---
 
-	let overlayElement: HTMLDivElement;
-	let clipPathStyle = '';
+	let overlayElement: HTMLDivElement | undefined = $state(undefined);
+	let clipPathStyle = $state('');
 	let resizeObserver: ResizeObserver;
 	// Variable para guardar el ID del intervalo y poder limpiarlo después.
 	let pollInterval: ReturnType<typeof setInterval>; /**
@@ -61,16 +61,17 @@
 		}
 	};
 
-	onMount(() => {
-		// En lugar de un setTimeout, iniciamos un sondeo (polling) que se ejecuta
-		// repetidamente hasta que todos los elementos necesarios estén en el DOM.
-		pollInterval = setInterval(tryInitializeMask, 100);
-	});
+	$effect(() => {
+		const _ = [Page.keyboardType, Page.showHelp];
+		return untrack(() => {
+			pollInterval = setInterval(tryInitializeMask, 100);
 
-	onDestroy(() => {
-		// Limpiamos tanto el observer como el intervalo para evitar fugas de memoria.
-		resizeObserver?.disconnect();
-		clearInterval(pollInterval);
+			return () => {
+				// Limpiamos tanto el observer como el intervalo para evitar fugas de memoria.
+				resizeObserver?.disconnect();
+				clearInterval(pollInterval);
+			};
+		});
 	});
 
 	// La Svelte Action 'follow' no necesita cambios.

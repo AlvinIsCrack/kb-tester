@@ -75,7 +75,7 @@
   "buttons.reset": "Restablecer teclado",
   "buttons.clear-log": "Borrar registro de teclas",
   "buttons.toggle-log": "Alternar registro de teclas",
-  "buttons.show-help": "Mostrar ayuda",
+  "buttons.show-help": "Ayuda",
 
   "buttons.tooltip.reset": "Restablece todos los estados de las teclas <shortcut>Ctrl+R</shortcut>",
   "buttons.tooltip.clear-log": "Borra el registro de teclas <shortcut>Ctrl+C</shortcut>",

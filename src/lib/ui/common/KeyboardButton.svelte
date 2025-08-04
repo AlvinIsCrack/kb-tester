@@ -3,6 +3,7 @@
 	import {
 		DisplayMode,
 		Key,
+		KeyboardType,
 		keyDisplays,
 		KeyPressSpeed,
 		keyTypeMapping
@@ -19,7 +20,7 @@
 		const _ = [Page.showIntlBackslash];
 
 		return tv({
-			base: 'relative text-center text-muted-foreground bg-background select-none flex justify-center items-center text-nowrap h-12 aspect-[.925] rounded-xs gap-1 p-2 px-3 border-1 hover:ring-3 hover:cursor-pointer hover:ring-foreground',
+			base: 'pointer-events-auto relative text-center text-muted-foreground rounded-sm bg-background select-none flex justify-center items-center text-nowrap h-12 aspect-[.925] gap-1 p-2 px-3 border-2 hover:ring-3 hover:cursor-pointer hover:ring-foreground',
 			variants: {
 				wasPressed: {
 					false: '',
@@ -42,8 +43,8 @@
 					[Key.Enter]: 'aspect-[2] w-full justify-center', // 2.25u
 
 					// Fila 4
-					[Key.ShiftLeft]: `w-full justify-start`, // 2.25u
-					[Key.ShiftRight]: 'aspect-[2.4] w-full justify-end text-end', // 2.75u
+					[Key.ShiftLeft]: `aspect-[2.2] justify-start`, // 2.25u
+					[Key.ShiftRight]: `w-full justify-end`, // 2.75u
 
 					// Fila 5 (Bottom Row)
 					[Key.ControlLeft]: 'aspect-[1.2] justify-center', // 1.25u
@@ -53,10 +54,7 @@
 
 					[Key.AltRight]: 'aspect-[1.2] justify-center', // 1.25u
 					[Key.ContextMenu]: 'aspect-[1.2]', // 1.25u
-					[Key.ControlRight]: 'aspect-[1.2] justify-center', // 1.25u
-
-					// Teclas especiales sin ancho modificado
-					[Key.Escape]: 'justify-start',
+					[Key.ControlRight]: `aspect-[1.2] justify-center`, // 1.25u
 
 					// Numpad (estos ya tenían un manejo especial)
 					[Key.NumpadAdd]: 'h-full aspect-auto',
@@ -119,7 +117,7 @@
 	<div
 		use:tooltip={{
 			content: [
-				tr(`key.${key}.tooltip`),
+				tr(`key.${key}.tooltip` as any),
 				...(typeKey
 					? [
 							`<span class="keytype-overlay-${typeKey} rounded-sm border px-1 ml-1">${tr(`keytype.${typeKey}`)}</span>`
@@ -176,7 +174,7 @@
 		{#if !display && typeKey}
 			<div
 				transition:fade={{ duration: 200 }}
-				class="pointer-events-none absolute top-0 left-0 h-full w-full overflow-hidden rounded-sm keytype-overlay-{typeKey}"
+				class="pointer-events-none absolute top-0 left-0 z-20 h-full w-full overflow-hidden rounded-sm border-2 keytype-overlay-{typeKey}"
 			></div>
 		{/if}
 	</div>
