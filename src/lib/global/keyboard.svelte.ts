@@ -48,9 +48,6 @@ export enum KeyType {
  * @see https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_code_values
  */
 export enum Key {
-    // Especial
-    Air = "_",
-
     // --- Teclas Alfanuméricas (Sección principal) ---
 
     // Letras
@@ -331,8 +328,6 @@ export const keyDisplays: { [key: string]: { icon?: Component; text?: string; } 
 } as const;
 
 export const keyTypeMapping: Record<Key, KeyType> = {
-    [Key.Air]: KeyType.System,
-
     // --- KeyType.Alpha ---
     // Includes all letters, the number row, punctuation, and space.
     [Key.A]: KeyType.Alpha,
@@ -478,6 +473,6 @@ export enum KeyboardType {
     Compact75 = "75",     // 75% (con flechas)
     Compact65 = "65",     // 65% (con flechas compactas)
     Compact60 = "60",     // 60% (sin flechas, F keys, ni numpad)
-    // Compact40 = "40",     // 40% (mínimo)
+    Compact40 = "40",     // 40% (mínimo)
     // Layout1800 = "1800"   // 1800 layout (compacto con numpad)
 }

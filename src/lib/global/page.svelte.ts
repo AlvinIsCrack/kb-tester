@@ -1,4 +1,5 @@
 import { DisplayMode, Key, KeyboardType, type KeyboardRows } from "$lib/global/keyboard.svelte";
+import { getKeyboardConfig } from "$lib/utils/KeyboardHelper";
 import LocalStorage from "$lib/utils/LocalStorage.svelte";
 import type { KeyboardLayoutsType as KeyboardLayoutsKeys } from "./kb_layouts.svelte";
 import KeyboardLayouts from "./kb_layouts.svelte";
@@ -10,6 +11,7 @@ let _showIntlBackslash = $state(LocalStorage.getItem('showIntlBackslash') === "t
 let _singlePressDetection = $state(LocalStorage.getItem('singlePressDetection') === 'true')
 
 let _keyboardType: KeyboardType = $state(LocalStorage.getItem('keyboardType', KeyboardType.FullSize) as any);
+let _keyboardConfig = $derived(getKeyboardConfig(_keyboardType))
 let _displayMode: DisplayMode = $state(LocalStorage.getItem('displayMode', DisplayMode.Default) as any);
 let _selectedKeys: Key[] = $state([]);
 
@@ -83,6 +85,10 @@ const Page = {
         _singlePressDetection = value;
         localStorage.setItem('singlePressDetection', `${value}`);
     },
+
+    get keyboardConfig() {
+        return _keyboardConfig;
+    }
 }
 
 export default Page;

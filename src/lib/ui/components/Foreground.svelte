@@ -30,12 +30,12 @@
 {#if pressed}
 	<div
 		out:fade
-		class="pointer-events-none fixed z-40 h-full w-full ring-8 ring-foreground ring-inset"
+		class="pointer-events-none fixed z-40 h-full w-full ring-4 ring-foreground/80 ring-inset"
 	>
 		{#key pressed}
 			{@const delay = pressed - lastPressed}
 			<div
-				class="background-ring absolute h-full w-full ring-16
+				class="background-ring absolute h-full w-full ring-8
             {delay >= KeyPressSpeed.Normal
 					? 'ring-foreground/80'
 					: delay >= KeyPressSpeed.Fast

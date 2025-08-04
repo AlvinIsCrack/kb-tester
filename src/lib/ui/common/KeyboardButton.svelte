@@ -3,7 +3,6 @@
 	import {
 		DisplayMode,
 		Key,
-		KeyboardType,
 		keyDisplays,
 		KeyPressSpeed,
 		keyTypeMapping
@@ -14,7 +13,6 @@
 	import type { HTMLAttributes } from 'svelte/elements';
 	import { tooltip } from './Tooltip.svelte';
 	import { tr } from '$lib/locale/locale.svelte';
-	import { fade } from 'svelte/transition';
 
 	const keyboardButton = $derived.by(() => {
 		const _ = [Page.showIntlBackslash];
@@ -43,7 +41,7 @@
 					[Key.Enter]: 'aspect-[2] w-full justify-center', // 2.25u
 
 					// Fila 4
-					[Key.ShiftLeft]: `aspect-[2.2] justify-start`, // 2.25u
+					[Key.ShiftLeft]: `w-full justify-start`, // 2.25u
 					[Key.ShiftRight]: `w-full justify-end`, // 2.75u
 
 					// Fila 5 (Bottom Row)
@@ -95,21 +93,11 @@
 		return untrack(() => Input.timesPressed(key));
 	});
 
-	const layoutKeys = $derived.by(() => {
-		const base = keyDisplays[key as keyof typeof keyDisplays] ?? {
+	const layoutKeys = $derived(
+		keyDisplays[key as keyof typeof keyDisplays] ?? {
 			text: key.replace(/digit|numpad|key/i, '')
-		};
-
-		return base;
-	});
-
-	let ready = $state(false);
-
-	$effect(() => {
-		setTimeout(() => {
-			ready = true;
-		}, 200);
-	});
+		}
+	);
 </script>
 
 {#if key !== Key.IntlBackslash || Page.showIntlBackslash}
@@ -149,17 +137,13 @@
 
 		{#if (display || !Page.hideKeyLabels) && layoutKeys.icon}
 			{@const Icon = layoutKeys.icon}
-			<div
-				transition:fade={{ duration: 100 }}
-				class="absolute flex h-full w-full items-center justify-center"
-			>
+			<div class="absolute flex h-full w-full items-center justify-center">
 				<Icon class="inline scale-150" />
 			</div>
 		{/if}
 
 		{#if (display || !Page.hideKeyLabels) && layoutKeys.text}
 			<div
-				transition:fade={{ duration: 100 }}
 				style:text-align="inherit"
 				class="absolute text-center leading-3.5 {layoutKeys.text.replace(/\s+/g, '').length >= 3
 					? 'text-sm'
@@ -173,7 +157,6 @@
 
 		{#if !display && typeKey}
 			<div
-				transition:fade={{ duration: 200 }}
 				class="pointer-events-none absolute top-0 left-0 z-20 h-full w-full overflow-hidden rounded-sm border-2 keytype-overlay-{typeKey}"
 			></div>
 		{/if}

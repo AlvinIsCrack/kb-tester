@@ -45,34 +45,32 @@ export function getKeyboardConfig(type: KeyboardType): KeyboardConfig {
         case KeyboardType.Compact75:
             return {
                 showNumpad: false,
-                showArrows: true,
+                showArrows: false,
                 specialKeys: [],
                 compact: true,
                 fnKeys: [...fnKeys, [Key.Delete]],
                 mainKeys: [
-                    mainKeys[0],
-                    mainKeys[1],
-                    mainKeys[2],
-                    [...mainKeys[3], Key.Air],
-                    [...mainKeys[4], Key.Air, Key.Air],
-                ],
-                navKeys: [Key.Home, Key.End, Key.PageUp, Key.PageDown]
+                    [...mainKeys[0], Key.PageUp],
+                    [...mainKeys[1], Key.PageDown],
+                    [...mainKeys[2], Key.Home],
+                    [...mainKeys[3], Key.ArrowUp, Key.End],
+                    [...mainKeys[4], Key.ArrowLeft, Key.ArrowDown, Key.ArrowRight],
+                ]
             };
 
         case KeyboardType.Compact65:
             return {
                 showNumpad: false,
-                showArrows: true,
+                showArrows: false,
                 specialKeys: [],
                 compact: true,
                 mainKeys: [
-                    mainKeys[0],
-                    mainKeys[1],
-                    mainKeys[2],
-                    [...mainKeys[3], Key.Air],
-                    [...mainKeys[4], Key.Air, Key.Air],
-                ],
-                navKeys: [Key.Home, Key.PageUp, Key.PageDown, Key.End]
+                    [...mainKeys[0], Key.Home],
+                    [...mainKeys[1], Key.PageUp],
+                    [...mainKeys[2], Key.PageDown],
+                    [...mainKeys[3], Key.ArrowUp, Key.End],
+                    [...mainKeys[4], Key.ArrowLeft, Key.ArrowDown, Key.ArrowRight],
+                ]
             };
 
         case KeyboardType.Compact60:
@@ -92,14 +90,22 @@ export function getKeyboardConfig(type: KeyboardType): KeyboardConfig {
         //         specialKeys: [Key.PrintScreen, Key.ScrollLock, Key.Pause]
         //     };
 
-        // case KeyboardType.Compact40:
-        //     return {
-        //         showFunctionRow: false,
-        //         showNavigation: false,
-        //         showNumpad: false,
-        //         showArrows: false,
-        //         specialKeys: []
-        //     };
+        case KeyboardType.Compact40: {
+            let keys40 = [
+                [Key.Escape, ...mainKeys[1].slice(1, -3), Key.Backspace],
+                [Key.Tab, ...mainKeys[2].slice(1, -2), Key.Enter],
+                [...mainKeys[3]],
+                [...mainKeys[4]],
+            ];
+
+            return {
+                showNumpad: false,
+                showArrows: false,
+                specialKeys: [],
+                compact: true,
+                mainKeys: keys40
+            };
+        }
 
         default:
             return getKeyboardConfig(KeyboardType.FullSize);
