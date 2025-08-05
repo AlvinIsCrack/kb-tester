@@ -79,7 +79,7 @@
 	import { tooltip } from './Tooltip.svelte';
 	import { tr } from '$lib/locale/locale.svelte';
 	import { tv } from 'tailwind-variants';
-	import { fade, fly } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 
 	const {
 		key,
@@ -115,7 +115,6 @@
 </script>
 
 <div
-	in:fade|global={{ duration: 200 }}
 	use:tooltip={{
 		content: [
 			tr(`key.${key}.tooltip` as any),
