@@ -79,7 +79,7 @@
 	import { tooltip } from './Tooltip.svelte';
 	import { tr } from '$lib/locale/locale.svelte';
 	import { tv } from 'tailwind-variants';
-	import { fly } from 'svelte/transition';
+	import { scale } from 'svelte/transition';
 
 	const {
 		key,
@@ -115,6 +115,7 @@
 </script>
 
 <div
+	in:scale|global={{ duration: 200 }}
 	use:tooltip={{
 		content: [
 			tr(`key.${key}.tooltip` as any),
@@ -140,7 +141,6 @@
 >
 	{#if timesPressed > 0}
 		<div
-			transition:fly|global={{ y: 5, duration: 200 }}
 			class="pointer-events-none absolute top-0 right-0 px-1 text-xs opacity-50 {display
 				? 'flex aspect-square translate-x-1/3 -translate-y-1/3 items-center justify-center font-bold text-foreground opacity-100 text-shadow-sm/100 text-shadow-background'
 				: ''}"
