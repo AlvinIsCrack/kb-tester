@@ -71,7 +71,7 @@
 			</div>
 		{/if}
 		{#each config.mainKeys as row, j (j - config.mainKeys.length + 1)}
-			<div animate:flip={{ duration: 200, easing: circOut }} class={keyboardRow({})}>
+			<div class={keyboardRow({})}>
 				{#each row as key (key)}
 					<div
 						animate:flip={{ duration: 200, easing: circOut }}
